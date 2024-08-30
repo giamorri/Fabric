@@ -1,10 +1,15 @@
-/* src/index.css */
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #ffb854;
-  color: #333;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('./background/fashion-background.png');
+
 }
+
 
 nav {
   background-color: #333;
