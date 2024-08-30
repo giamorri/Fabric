@@ -1,0 +1,41 @@
+/* src/index.css or src/components/Navbar.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    position: fixed; /* Fixes the navbar to the screen */
+    top: 0; /* Aligns it to the top */
+    right: 0; /* Aligns it to the right */
+    background-color: #333; /* Background color */
+    padding: 10px 20px; /* Padding around the navbar */
+    display: flex; /* Use Flexbox for horizontal alignment */
+    justify-content: flex-end; /* Aligns items to the right */
+    width: auto; /* Adjusts width dynamically */
+  }
+  
+  .navbar-list {
+    list-style: none; /* Removes default list style */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Horizontal alignment of list items */
+  }
+  
+  .navbar-list li {
+    margin: 0 10px; /* Adds space between list items */
+  }
+  
+  .navbar-list li a {
+    color: white; /* Link color */
+    text-decoration: none; /* Removes underline */
+    padding: 10px; /* Padding inside links */
+  }
+  
+  .navbar-list li a:hover {
+    background-color: #444; /* Background color on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+  }
+  
