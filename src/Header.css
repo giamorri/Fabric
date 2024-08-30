@@ -1,0 +1,26 @@
+/*CSS for Header Navigations*/
+.navLinks   
+{
+    border-radius: 15px;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    /*background-color: #C0925B;*/
+    color: #C0925B;
+    ;
+    font-weight: bold;
+    position: right;
+    font-size: 20px;
+    width: 100px;
+}
+
+.fabricSample
+{
+    position: left;
+}
+
+img
+{
+    max-width: 100%;
+    height: 25px;
+}
