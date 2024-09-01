@@ -1,7 +1,14 @@
+import React from "react";
+import './Header.css';
 
 const Settings = () => {
-    return <h1>adjust your settings here</h1>;
+    return (
+      <div className="settings">
+          <h1 className="header">adjust your settings here</h1>;
+      </div>
+    );      
   };
-  
+
   export default Settings;
+
   
