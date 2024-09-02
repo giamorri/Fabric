@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <ul className="fabricSample">
-        <img src={sampleLogo}></img>
+        <img src={sampleLogo} alt=""></img>
       </ul>
       <ul className="navbar-list">
         <li><Link to="/Home">Home</Link></li>

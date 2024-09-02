@@ -1,0 +1,90 @@
+.profile-container {
+    background-color: #ffffff; /* White background */
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 1000px; /* Increased size for desktop */
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .cover-photo {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Increased cover photo height */
+    background-color: #e0e0e0; /* Light grey placeholder */
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .cover-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-picture-container {
+    position: absolute;
+    top: 200px; /* Adjusted for larger cover photo */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  .profile-picture {
+    width: 150px; /* Increased size for desktop */
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffffff; /* White border around the picture */
+  }
+  
+  .username {
+    font-size: 28px; /* Larger font size */
+    font-weight: bold;
+    color: #4e342e; /* Deep brown text */
+    margin-top: 60px; /* Adjusted for profile picture */
+  }
+  
+  .handle {
+    font-size: 18px; /* Slightly larger */
+    color: #8b5e3c; /* Soft brown */
+    margin: 5px 0;
+  }
+  
+  .follower-info {
+    font-size: 16px;
+    color: #8b5e3c; /* Soft brown */
+    margin: 10px 0;
+  }
+  
+  
+  .profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+
+  
+  .edit-profile-button {
+    background-color: #8b5e3c; /* Brown background */
+    color: #ffffff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .edit-profile-button:hover {
+    background-color: #795548; /* Darker brown on hover */
+  }
+  
+  .share-button:hover {
+    background-color: #e0e0e0;
+  }
+  
