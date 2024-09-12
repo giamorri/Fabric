@@ -1,0 +1,94 @@
+/* General Body Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #343641; /* Background matches the navbar */
+  color: rgb(191, 141, 93); /* Text color matches navbar links */
+  margin: 0;
+  padding: 0;
+}
+
+/* Wrapper for the entire Sign In / Sign Up form */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full-screen height for SignIn/SignUp pages */
+}
+
+/* Brown transparent box behind the form */
+.auth-wrapper {
+  background-color: rgba(191, 141, 93, 0.2); /* Brown transparent box */
+  padding: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container for the Sign In and Sign Up Forms */
+.auth-container {
+  background-color: rgba(68, 68, 68, 0.9); /* Dark background */
+  padding: 40px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form Titles (Sign In, Sign Up) */
+.auth-container h2 {
+  text-align: center;
+  color: rgb(191, 141, 93); /* Same color as navbar links */
+  margin-bottom: 30px;
+}
+
+/* Input Fields */
+.auth-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #343641; /* Background matches navbar */
+  color: rgb(191, 141, 93); /* Text color */
+}
+
+.auth-container input:focus {
+  outline: none;
+  border: 1px solid rgb(191, 141, 93); /* Border color on focus */
+}
+
+/* Submit Button */
+.auth-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(191, 141, 93); /* Button color matches navbar */
+  color: #343641;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px; /* Space between buttons */
+}
+
+.auth-container button:hover {
+  background-color: #444; /* Matches navbar link hover */
+  color: rgb(191, 141, 93); /* Inverted color */
+}
+
+/* Link Styling for Switching Between Sign In and Sign Up */
+.auth-container .switch-auth {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-container .switch-auth a {
+  color: rgb(191, 141, 93); /* Matches navbar link color */
+  text-decoration: none;
+}
+
+.auth-container .switch-auth a:hover {
+  text-decoration: underline;
+}

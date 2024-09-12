@@ -6,6 +6,9 @@ import Profile from './components/Profile';
 import Settings from './components/Settings';
 import Contact from './components/Contact';
 
+import Signup from './components/Signup'; 
+import Signin from './components/Signin';
+
 const App = () => {
   return (
     <Router>
@@ -16,6 +19,8 @@ const App = () => {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/Signup" element={<Signup />} /> 
+          <Route path="/Signin" element={<Signin />} />  
         </Routes>
       </div>
     </Router>

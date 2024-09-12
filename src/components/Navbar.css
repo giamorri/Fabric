@@ -6,7 +6,7 @@ body {
 
 .navbar {
   position: fixed;
-  top: 10px;
+  top: 0px;
   right: 0;
   background-color: #343641;
   padding: 10px 20px;
@@ -50,6 +50,12 @@ img {
     bottom: auto;
   }
 }
+/* Adjust dropdown positioning for small screens */
+.dropdown-menu {
+  top: auto; 
+  bottom: 100%; 
+}
+
 
 img {
   max-width: 100%;
@@ -77,4 +83,46 @@ img {
 .navbar-list li a:hover {
   background-color: #444;
   border-radius: 5px; 
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  display: flex; /* Horizontal layout */
+  flex-direction: row;
+  position: absolute;
+  top: 100%; /* Dropdown appears below the navbar */
+  background-color: #343641; /* Same as navbar background color */
+  border: 1px solid #ccc;
+  padding: 20px;
+  z-index: 999; /* Ensure dropdown is above other elements */
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    top: auto;
+    bottom: 100%; /* When the navbar is at the bottom, show the dropdown above */
+    padding: 10px; /* Reduced padding for small screens */
+
+  }
+}
+
+.dropdown-menu li {
+  list-style: none; /* Removes bullets */
+  margin-right: 10px;
+}
+
+.dropdown-menu li:last-child {
+  margin-right: 0;
+}
+
+.dropdown-menu li a {
+  color: rgb(191, 141, 93); /* Dropdown link color */
+  text-decoration: none;
+  padding: 10px;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #444; /* Hover background color */
+  border-radius: 10px;
 }
