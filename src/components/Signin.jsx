@@ -1,19 +1,55 @@
-import React from 'react';
-import './SigninSignup.css'; // Make sure to import the CSS file
+import React, { useState } from 'react';
+import './SigninSignup.css';
 
 const Signin = () => {
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    const response = await fetch('http://localhost:5000/api/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ usernameOrEmail, password }),
+    });
+    const data = await response.json();
+
+    if (response.ok) {
+      // Save the username to localStorage
+      localStorage.setItem('username', data.user.username); // Assuming the response contains the user object
+      setMessage('Sign in successful');
+      // Redirect to profile page after successful sign in
+      window.location.href = '/Profile';
+    } else {
+      setMessage(`Error: ${data.error}`);
+    }
+  };
+
   return (
-    <div className="auth-wrapper"> {/* Added transparent brown box */}
+    <div className="auth-wrapper">
       <div className="auth-container">
         <h2>Sign In</h2>
-        <form>
-          <input type="text" placeholder="Username or Email" required />
-          <input type="password" placeholder="Password" required />
+        <form onSubmit={handleSignin}>
+          <input
+            type="text"
+            placeholder="Username or Email"
+            value={usernameOrEmail}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           <button type="submit">Sign In</button>
         </form>
-        <div className="switch-auth">
-          <p>Don't have an account? <a href="/Signup">Sign Up</a></p>
-        </div>
+        {message && <p>{message}</p>}
       </div>
     </div>
   );
