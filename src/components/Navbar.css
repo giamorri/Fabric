@@ -126,3 +126,17 @@ img {
   background-color: #444; /* Hover background color */
   border-radius: 10px;
 }
+
+.logout-button {
+  background-color: transparent;
+  border: none;
+  color: rgb(191, 141, 93); /* Same color as the other links */
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0px;
+}
+
+.logout-button:hover {
+  background-color: #444; /* Same hover color as other buttons */
+  border-radius: 5px;
+}
