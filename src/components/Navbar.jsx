@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import sampleLogo from './images/logoSample3.png';
@@ -6,16 +6,30 @@ import sampleLogo from './images/logoSample3.png';
 const Navbar = () => 
   {
 
-  const [dropdownVisible, setDropdownVisible] = useState(false); // State to manage visibility of the login dropdown
+  const [dropdownVisible, setDropdownVisible] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    if (username) {
+      setIsLoggedIn(true); 
+    }
+  }, []);
 
   const handleMouseEnter = () => {
-    setDropdownVisible(true); // Show the dropdown on mouse enter
+    setDropdownVisible(true); 
   };
 
   const handleMouseLeave = () => {
-    setDropdownVisible(false); // Hide the dropdown on mouse leave
+    setDropdownVisible(false); 
   };
 
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem('username'); 
+    setIsLoggedIn(false); 
+    window.location.href = '/Signin'; 
+  };
 
   return (
     <nav className="navbar">
@@ -26,21 +40,28 @@ const Navbar = () =>
         <li><Link to="/Home">HOME</Link></li>
         <li><Link to="/Profile">PROFILE</Link></li>
         
-        {/* Login dropdown  */}
-        <li 
-          className="dropdown" 
-          onMouseEnter={handleMouseEnter} // Show the dropdown on hover
-          onMouseLeave={handleMouseLeave} // Hide the dropdown when mouse leaves
-        >
-          <Link to="#">LOGIN</Link> {/* # is used here because we do not want it to navigate */}
-          
-          {dropdownVisible && ( // Conditionally render the dropdown
-            <ul className="dropdown-menu">
-              <li><Link to="/Signin">SIGN IN</Link></li> {/* Link for sign in */}
-              <li><Link to="/Signup">SIGN UP</Link></li> {/* Link for sign up */}
-            </ul>
-          )}
-        </li>
+         {!isLoggedIn ? (
+          <li 
+            className="dropdown" 
+            onMouseEnter={handleMouseEnter} 
+            onMouseLeave={handleMouseLeave}
+          >
+            <Link to="#">LOGIN</Link>
+            {dropdownVisible && (
+              <ul className="dropdown-menu">
+                <li><Link to="/Signin">SIGN IN</Link></li>
+                <li><Link to="/Signup">SIGN UP</Link></li>
+              </ul>
+            )}
+          </li>
+        ) : (
+          <li>
+            <button className="logout-button" onClick={handleLogout}>
+              LOGOUT
+            </button>
+          </li>
+        )}
+
         <li><Link to="/Settings">SETTINGS</Link></li>
         <li><Link to="/Contact">CONTACT</Link></li>
       
