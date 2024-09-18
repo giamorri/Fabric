@@ -10,8 +10,9 @@ body {
   right: 0;
   background-color: #343641;
   padding: 10px 20px;
-  width: auto;
+  width: full;
   z-index: 1000;
+  border-radius: 8px;
 }
 
 
@@ -19,7 +20,7 @@ body {
   display: flex;
   justify-content: flex-start;
   position: fixed;
-  top: 10px;
+  top: -7px;
   left: 10px;
   z-index: 1001;
 }
