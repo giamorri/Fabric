@@ -33,5 +33,7 @@ once everything is installed:
 > 
 once this is done, the project should be up and running in the default browser 
 
-
+> you can create your own account but if you wish to use a default login, use the following account:
+username: vintage
+password: vintage
 
