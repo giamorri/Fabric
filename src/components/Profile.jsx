@@ -85,8 +85,8 @@ const toggleLike = () => {
   const handleImageUpload = (event) => {
     const formData = new FormData();
     formData.append('profileImage', event.target.files[0]);
-    formData.append('username', localStorage.getItem('username')); // Retrieve the username from localStorage
-
+    formData.append('username', localStorage.getItem('username'));  // Ensure username is present
+  
     fetch('http://localhost:5000/api/upload-profile-image', {
       method: 'POST',
       body: formData,
@@ -95,12 +95,13 @@ const toggleLike = () => {
       .then((data) => {
         const imageUrl = `http://localhost:5000/${data.profileImageUrl}`;
         setProfileImageUrl(imageUrl);
-        localStorage.setItem('profileImage', imageUrl); // Save new profile image to localStorage
+        localStorage.setItem('profileImage', imageUrl);  // Update localStorage with new profile image
       })
       .catch((error) => {
         console.error('Error uploading image:', error);
       });
   };
+  
 
   const triggerFileInput = () => {
     profileInputRef.current.click();
