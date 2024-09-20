@@ -27,6 +27,8 @@ const Navbar = () =>
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem('username'); 
+    localStorage.removeItem('profileImage'); // Clear profile image from localStorage
+
     setIsLoggedIn(false); 
     window.location.href = '/Signin'; 
   };

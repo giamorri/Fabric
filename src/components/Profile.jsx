@@ -6,9 +6,8 @@ const Profile = () => {
   const profileInputRef = useRef(null);
   const coverInputRef = useRef(null);
 
-  const [profileImage, setProfileImage] = useState('default-profile.jpg');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
   const [coverImage, setCoverImage] = useState('default-cover.jpg');
-
   const [isModalOpen, setIsModalOpen] = useState(false); // For post creation modal
   const [isPostViewModalOpen, setIsPostViewModalOpen] = useState(false); // For viewing a post modal
   const [postImage, setPostImage] = useState(null); // Store uploaded image for post
@@ -81,21 +80,34 @@ const toggleLike = () => {
     });
   };
 
-  // Function to handle image upload
-  const handleImageUpload = (event, setImage) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  
+  
+  const handleImageUpload = (event) => {
+    const formData = new FormData();
+    formData.append('profileImage', event.target.files[0]);
+    formData.append('username', localStorage.getItem('username')); // Retrieve the username from localStorage
+
+    fetch('http://localhost:5000/api/upload-profile-image', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const imageUrl = `http://localhost:5000/${data.profileImageUrl}`;
+        setProfileImageUrl(imageUrl);
+        localStorage.setItem('profileImage', imageUrl); // Save new profile image to localStorage
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+      });
   };
 
-  const triggerFileInput = (inputRef) => {
-    inputRef.current.click();
+  const triggerFileInput = () => {
+    profileInputRef.current.click();
   };
+  
+   
+
 
  // Handle submitting the post (image + caption)
 const handlePostSubmit = () => {
@@ -124,11 +136,20 @@ const handlePostSubmit = () => {
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
+    const storedProfileImage = localStorage.getItem('profileImage');
+
     if (storedUsername) {
       setUsername(storedUsername);
     }
-  }, []);
 
+    if (storedProfileImage) {
+      setProfileImageUrl(storedProfileImage);
+    }
+  }, []);
+  
+  
+  
+  
   return (
     <div className="profile-container">
       <div className="profile-header">
@@ -146,18 +167,19 @@ const handlePostSubmit = () => {
           />
         </div>
         <div className="profile-picture-container" onClick={() => triggerFileInput(profileInputRef)}>
-          <img src={profileImage} alt="Profile" className="profile-picture" />
+        <img src={profileImageUrl} alt="Profile" className="profile-picture" />
           <div className="upload-overlay">
             <span>Upload Profile Picture</span>
           </div>
           <input
             type="file"
             ref={profileInputRef}
-            onChange={(e) => handleImageUpload(e, setProfileImage)}
+            onChange={(e) => handleImageUpload(e, setProfileImageUrl)}
             style={{ display: 'none' }}
             accept="image/*"
           />
         </div>
+
         <h1 className="profile-name">{username}</h1>
         <p className="fabricusername">@{username}</p>
         <div className="profile-actions">
@@ -293,7 +315,7 @@ const handlePostSubmit = () => {
               <img src={currentPost.image} alt="Post" className="image-preview-large" />
 
               {/* Profile Image on the right */}
-              <img src={profileImage} alt="Profile" className="profile-picture-small" />
+              <img src={profileImageUrl} alt="Profile" className="profile-picture-small" /> 
 
               {/* Username above the post image */}
               <p className="username-above">@{username}</p>
