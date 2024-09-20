@@ -2,7 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors'); // To allow requests from React frontend
 const app = express();
-const port = 5001;
+const port = 5000;
 const multer = require('multer');
 const path = require('path');
 
