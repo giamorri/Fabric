@@ -14,6 +14,8 @@ you should have the following installed:
 
 > sqlite3 v3.46.1
 
+> git 2.46.0 (not required but noted just in case)
+
 once everything is installed:
 > download the project
 
