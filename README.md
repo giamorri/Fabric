@@ -25,7 +25,7 @@ once everything is installed:
 
 > `npm start`
 
-> then open another vscode terminal and enter the following lines one at a time:
+> then open another vscode terminal and enter the following lines one at a time to start the backend:
 
 > `cd backend`
 
