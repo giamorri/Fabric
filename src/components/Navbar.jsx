@@ -3,15 +3,13 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import sampleLogo from './images/logoSample3.png';
 
-const Navbar = () => 
-  {
-
+const Navbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false); 
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
-    if (username) {
+    const user = localStorage.getItem('user');
+    if (user) {
       setIsLoggedIn(true); 
     }
   }, []);
@@ -26,7 +24,7 @@ const Navbar = () =>
 
   // Logout function
   const handleLogout = () => {
-    localStorage.removeItem('username'); 
+    localStorage.removeItem('user'); 
     setIsLoggedIn(false); 
     window.location.href = '/Signin'; 
   };
@@ -34,13 +32,13 @@ const Navbar = () =>
   return (
     <nav className="navbar">
       <ul className="fabricSample">
-        <img src={sampleLogo} alt=""></img>
+        <img src={sampleLogo} alt="Logo"></img>
       </ul>
       <ul className="navbar-list">
         <li><Link to="/Home">HOME</Link></li>
         <li><Link to="/Profile">PROFILE</Link></li>
         
-         {!isLoggedIn ? (
+        {!isLoggedIn ? (
           <li 
             className="dropdown" 
             onMouseEnter={handleMouseEnter} 
@@ -64,7 +62,6 @@ const Navbar = () =>
 
         <li><Link to="/Settings">SETTINGS</Link></li>
         <li><Link to="/Contact">CONTACT</Link></li>
-      
       </ul>
     </nav>
   );

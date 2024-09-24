@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import './SigninSignup.css';
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Initialize the navigate function
+
 
   const handleSignin = async (e) => {
     e.preventDefault();
@@ -15,18 +18,21 @@ const Signin = () => {
       },
       body: JSON.stringify({ usernameOrEmail, password }),
     });
+    
     const data = await response.json();
-
+  
     if (response.ok) {
-      // Save the username to localStorage
-      localStorage.setItem('username', data.user.username); // Assuming the response contains the user object
+      // Save the entire user object in localStorage
+      localStorage.setItem('user', JSON.stringify(data.user));
       setMessage('Sign in successful');
+      
       // Redirect to profile page after successful sign in
       window.location.href = '/Profile';
     } else {
       setMessage(`Error: ${data.error}`);
     }
   };
+  
 
   return (
     <div className="auth-wrapper">

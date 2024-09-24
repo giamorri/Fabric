@@ -1,15 +1,15 @@
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import { createRoot } from 'react-dom/client'; // Correct import for React 18+
+import './index.css'; 
 import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Get the root element from the DOM
+const rootElement = document.getElementById('root');
 
+// Create a root and render the App component
+const root = createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
-
-

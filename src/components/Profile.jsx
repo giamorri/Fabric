@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Profile.css';
+import axios from 'axios';
+
+
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -81,18 +84,35 @@ const toggleLike = () => {
     });
   };
 
-  // Function to handle image upload
-  const handleImageUpload = (event, setImage) => {
+  const handleImageUpload = async (event, setImage, fieldname) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append(fieldname, file);
+      formData.append('username', username);
+
+      try {
+        const response = await axios.post(`http://localhost:5000/api/upload/${fieldname}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        
+        const updatedImage = response.data.imagePath;
+        setImage(updatedImage);
+
+        // Update user data in localStorage
+        const updatedUser = JSON.parse(localStorage.getItem('user'));
+        updatedUser[fieldname] = updatedImage;
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      } catch (err) {
+        console.error('Image upload failed:', err);
+      }
     }
   };
 
+
+  // Trigger file input
   const triggerFileInput = (inputRef) => {
     inputRef.current.click();
   };
@@ -121,39 +141,49 @@ const handlePostSubmit = () => {
     setCurrentPost(post);
     setIsPostViewModalOpen(true);
   };
-
+  
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-      setUsername(storedUsername);
+    // Retrieve user data from localStorage on page load
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUsername(userData.username);
+        setProfileImage(userData.profileImage || 'default-profile.jpg');
+        setCoverImage(userData.coverImage || 'default-cover.jpg');
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+      }
     }
   }, []);
+  
+  
 
   return (
     <div className="profile-container">
       <div className="profile-header">
         <div className="cover-photo" onClick={() => triggerFileInput(coverInputRef)}>
-          <img src={coverImage} alt="Cover" className="cover-photo-img" />
-          <div className="upload-overlay">
+        <img src={`http://localhost:5000${coverImage}`} alt="Cover" className="cover-photo-img" />
+        <div className="upload-overlay">
             <span>Upload Cover Photo</span>
           </div>
           <input
             type="file"
             ref={coverInputRef}
-            onChange={(e) => handleImageUpload(e, setCoverImage)}
+            onChange={(e) => handleImageUpload(e, setCoverImage, 'coverImage')}
             style={{ display: 'none' }}
             accept="image/*"
           />
         </div>
         <div className="profile-picture-container" onClick={() => triggerFileInput(profileInputRef)}>
-          <img src={profileImage} alt="Profile" className="profile-picture" />
-          <div className="upload-overlay">
+        <img src={`http://localhost:5000${profileImage}`} alt="Profile" className="profile-picture" />
+        <div className="upload-overlay">
             <span>Upload Profile Picture</span>
           </div>
           <input
             type="file"
             ref={profileInputRef}
-            onChange={(e) => handleImageUpload(e, setProfileImage)}
+            onChange={(e) => handleImageUpload(e, setProfileImage, 'profileImage')}
             style={{ display: 'none' }}
             accept="image/*"
           />

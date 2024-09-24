@@ -8,10 +8,12 @@ import Contact from './components/Contact';
 
 import Signup from './components/Signup'; 
 import Signin from './components/Signin';
+import NeonCursor from './components/NeonCursor';
 
 const App = () => {
   return (
     <Router>
+       <NeonCursor /> 
       <Navbar />
       <div className="content">
         <Routes>
