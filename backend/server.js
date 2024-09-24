@@ -85,6 +85,25 @@ app.get('/api/users', (req, res) => {
 });
 
 // API endpoint to add a new user (sign up)
+app.post('/api/users', (req, res) => {
+  const { username, email, password } = req.body;
+  db.run(`INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
+    [username, email, password],
+    function (err) {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res.json({
+        message: 'User created',
+        userId: this.lastID,
+      });
+    }
+  );
+});
+
+
+// API endpoint to add a new user (sign up)
 // API to upload profile image
 app.post('/api/upload/profileImage', upload.single('profileImage'), (req, res) => {
   const { username } = req.body;
