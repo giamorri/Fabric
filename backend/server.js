@@ -14,6 +14,35 @@ app.use(express.json());
 
 app.use('/uploads', express.static('uploads'));
 
+// Setup Multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (file.fieldname === 'profileImage') {
+      cb(null, 'uploads/profileImages/');
+    } else if (file.fieldname === 'coverImage') {
+      cb(null, 'uploads/coverImages/');
+    } else if (file.fieldname === 'postImage') {
+      cb(null, 'uploads/postImages/');
+    }
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // File naming with timestamp
+  }
+});
+
+const upload = multer({ storage });
+
+// Create directories if not exist
+const createDirectories = () => {
+  const dirs = ['uploads/profileImages', 'uploads/coverImages', 'uploads/postImages'];
+  dirs.forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+  });
+};
+createDirectories(); // This function runs at the start to create necessary directories
+
 
 // Connect to SQLite database
 const db = new sqlite3.Database('./mydatabase.db', (err) => {
@@ -110,34 +139,7 @@ app.post('/api/signin', (req, res) => {
   });
 });
 
-// Setup Multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (file.fieldname === 'profileImage') {
-      cb(null, 'uploads/profileImages/');
-    } else if (file.fieldname === 'coverImage') {
-      cb(null, 'uploads/coverImages/');
-    } else if (file.fieldname === 'postImage') {
-      cb(null, 'uploads/postImages/');
-    }
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // File naming with timestamp
-  }
-});
 
-const upload = multer({ storage });
-
-// Create directories if not exist
-const createDirectories = () => {
-  const dirs = ['uploads/profileImages', 'uploads/coverImages', 'uploads/postImages'];
-  dirs.forEach(dir => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-  });
-};
-createDirectories();
 
 // API to upload profile image
 app.post('/api/upload/profileImage', upload.single('profileImage'), (req, res) => {
