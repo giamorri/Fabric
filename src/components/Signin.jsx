@@ -12,19 +12,6 @@ const Signin = () => {
   const handleSignin = async (e) => {
     e.preventDefault();
 
-<<<<<<< Updated upstream
-    if (response.ok) {
-      // Save the username to localStorage
-      localStorage.setItem('username', data.user.username); // Assuming the response contains the user object
-      localStorage.setItem('profileImage', `http://localhost:5000/${data.user.profileImage}`); // Save full image URL
-
-      
-      setMessage('Sign in successful');
-      // Redirect to profile page after successful sign in
-      window.location.href = '/Profile';
-    } else {
-      setMessage(`Error: ${data.error}`);
-=======
     try {
       // Sign in the user with Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -42,7 +29,6 @@ const Signin = () => {
       }
     } catch (error) {
       setMessage(`Error: ${error.message}`);
->>>>>>> Stashed changes
     }
   };
 

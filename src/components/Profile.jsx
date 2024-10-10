@@ -9,14 +9,9 @@ const Profile = () => {
   const profileInputRef = useRef(null);
   const coverInputRef = useRef(null);
 
-<<<<<<< Updated upstream
-  const [profileImageUrl, setProfileImageUrl] = useState('');
-  const [coverImage, setCoverImage] = useState('default-cover.jpg');
-=======
   const [profileImage, setProfileImage] = useState('path/to/default-profile.jpg'); 
   const [coverImage, setCoverImage] = useState('path/to/default-cover.jpg'); 
 
->>>>>>> Stashed changes
   const [isModalOpen, setIsModalOpen] = useState(false); // For post creation modal
   const [isPostViewModalOpen, setIsPostViewModalOpen] = useState(false); // For viewing a post modal
   const [postImage, setPostImage] = useState(null); // Store uploaded image for post
@@ -108,30 +103,6 @@ const toggleCommentBox = () => {
     });
   };
 
-<<<<<<< Updated upstream
-  
-  
-  const handleImageUpload = (event) => {
-    const formData = new FormData();
-    formData.append('profileImage', event.target.files[0]);
-    formData.append('username', localStorage.getItem('username'));  // Ensure username is present
-  
-    fetch('http://localhost:5000/api/upload-profile-image', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const imageUrl = `http://localhost:5000/${data.profileImageUrl}`;
-        setProfileImageUrl(imageUrl);
-        localStorage.setItem('profileImage', imageUrl);  // Update localStorage with new profile image
-      })
-      .catch((error) => {
-        console.error('Error uploading image:', error);
-      });
-  };
-  
-=======
   // Function to handle image upload
   const handleImageUpload = async (event, setImage, type) => {
     const file = event.target.files[0];
@@ -163,18 +134,10 @@ const toggleCommentBox = () => {
     }
 };
 
->>>>>>> Stashed changes
 
   const triggerFileInput = () => {
     profileInputRef.current.click();
   };
-<<<<<<< Updated upstream
-  
-   
-
-
-=======
->>>>>>> Stashed changes
  // Handle submitting the post (image + caption)
  const handlePostSubmit = () => {
    if (postImage && caption) {
@@ -198,24 +161,6 @@ const toggleCommentBox = () => {
     setIsPostViewModalOpen(true);
   };
 
-<<<<<<< Updated upstream
-  useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    const storedProfileImage = localStorage.getItem('profileImage');
-
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
-
-    if (storedProfileImage) {
-      setProfileImageUrl(storedProfileImage);
-    }
-  }, []);
-  
-  
-  
-=======
->>>>>>> Stashed changes
   
   return (
     <div className="profile-container">
@@ -235,23 +180,15 @@ const toggleCommentBox = () => {
           />
         </div>
         <div className="profile-picture-container" onClick={() => triggerFileInput(profileInputRef)}>
-<<<<<<< Updated upstream
-        <img src={profileImageUrl} alt="Profile" className="profile-picture" />
-=======
         <img src={profileImage || 'path/to/default-profile.jpg'} alt="Profile" className="profile-picture" />
 
->>>>>>> Stashed changes
           <div className="upload-overlay">
             <span>Upload Profile Picture</span>
           </div>
           <input
             type="file"
             ref={profileInputRef}
-<<<<<<< Updated upstream
-            onChange={(e) => handleImageUpload(e, setProfileImageUrl)}
-=======
             onChange={(e) => handleImageUpload(e, setProfileImage, 'profileImage')}
->>>>>>> Stashed changes
             style={{ display: 'none' }}
             accept="image/*"
           />
@@ -369,15 +306,7 @@ const toggleCommentBox = () => {
             </div>
             <div className="post-right">
               <img src={currentPost.image} alt="Post" className="image-preview-large" />
-<<<<<<< Updated upstream
-
-              {/* Profile Image on the right */}
-              <img src={profileImageUrl} alt="Profile" className="profile-picture-small" /> 
-
-              {/* Username above the post image */}
-=======
               <img src={profileImage} alt="Profile" className="profile-picture-small" />
->>>>>>> Stashed changes
               <p className="username-above">@{username}</p>
             </div>
           </div>
