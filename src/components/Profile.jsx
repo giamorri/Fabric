@@ -135,9 +135,10 @@ const toggleCommentBox = () => {
 };
 
 
-  const triggerFileInput = () => {
-    profileInputRef.current.click();
-  };
+const triggerFileInput = (inputRef) => {
+  inputRef.current.click();
+};
+
  // Handle submitting the post (image + caption)
  const handlePostSubmit = () => {
    if (postImage && caption) {
@@ -165,7 +166,7 @@ const toggleCommentBox = () => {
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <div className="cover-photo" onClick={() => triggerFileInput(coverInputRef)}>
+      <div className="cover-photo" onClick={() => triggerFileInput(coverInputRef)}>
         <img src={coverImage || 'path/to/default-cover.jpg'} alt="Cover" className="cover-photo-img" />
 
           <div className="upload-overlay">
