@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { storage, db } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getDocs } from 'firebase/firestore';
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
 import './Profile.css';
 
 const Profile = () => {
@@ -24,23 +27,42 @@ const Profile = () => {
   const [notification, setNotification] = useState(false); // Add state for showing notification
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const storedUsername = localStorage.getItem('username');
-      if (storedUsername) {
-        setUsername(storedUsername);
-        
-        const userDocRef = doc(db, 'users', storedUsername);
-        const userDoc = await getDoc(userDocRef);
-        
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
-          setCoverImage(userData.coverImage || 'path/to/default-cover.jpg');
+    const fetchData = async () => {
+      try {
+        // 1. Fetch User Data for Profile and Cover Image
+        const storedUsername = localStorage.getItem('username');
+        if (storedUsername) {
+          setUsername(storedUsername);
+          const userDocRef = doc(db, 'users', storedUsername);
+          const userDoc = await getDoc(userDocRef);
+          
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
+            setCoverImage(userData.coverImage || 'path/to/default-cover.jpg');
+          } else {
+            console.log("User document doesn't exist.");
+          }
         }
+  
+        // 2. Fetch Posts Data
+        const querySnapshot = await getDocs(collection(db, 'posts'));
+        const loadedPosts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setPosts(loadedPosts);
+        console.log("Posts loaded:", loadedPosts);
+  
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     };
-    fetchUserData();
-  }, []);
+  
+    fetchData();
+  }, []); // Only run once on component mount
+  
+  
   
   // Function to handle toggling likes
   const toggleLike = () => {
@@ -140,22 +162,33 @@ const triggerFileInput = (inputRef) => {
 };
 
  // Handle submitting the post (image + caption)
- const handlePostSubmit = () => {
-   if (postImage && caption) {
-     const newPost = { 
-       image: postImage, 
-       caption, 
-       liked: false, 
-       likes: 0, // Initialize likes with 0
-       comments: [] 
-     };
-     setPosts([newPost, ...posts]); // Add new post at the top
-     setPostImage(null);
-     setCaption('');
-     setIsModalOpen(false); // Close modal
-   }
- };
+ const handlePostSubmit = async () => {
+  if (postImage && caption) {
+    try {
+      // Save the post to Firestore
+      const newPost = {
+        image: postImage,      // URL of the uploaded image
+        caption,               // Caption for the post
+        liked: false,          // Initial liked state
+        likes: 0,              // Initialize likes to 0
+        comments: [],          // Initialize with an empty comments array
+        username,              // Store username for referencing user
+        createdAt: serverTimestamp(), // Store the timestamp for ordering posts
+      };
 
+      // Add the new post to Firestore
+      await addDoc(collection(db, 'posts'), newPost);
+
+      // Update the local state to display the new post immediately
+      setPosts([newPost, ...posts]); // Add new post at the top
+      setPostImage(null);
+      setCaption('');
+      setIsModalOpen(false); // Close the modal
+    } catch (error) {
+      console.error('Error creating new post:', error);
+    }
+  }
+};
   // Open post view modal
   const openPostViewModal = (post) => {
     setCurrentPost(post);
@@ -236,9 +269,10 @@ const triggerFileInput = (inputRef) => {
       <div className="posts-section">
         {posts.length > 0 ? (
           posts.map((post, index) => (
-            <div key={index} className="post-item" onClick={() => openPostViewModal(post)}>
+            <div key={post.id} className="post-item" onClick={() => openPostViewModal(post)}>
               <img src={post.image} alt="User Post" className="post-image" />
               <div className="post-info">
+                <p>{post.caption}</p>
               </div>
             </div>
           ))
