@@ -31,7 +31,19 @@ const Profile = () => {
     const fetchData = async (user) => {
       try {
         const userId = user.uid;
-        const displayName = user.displayName || userId;
+        let displayName = user.displayName;
+         // Check if displayName is available; if not, fetch username from Firestore
+      if (!displayName) {
+        const userDocRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          // Set displayName to the username from Firestore or fallback to UID
+          displayName = userDoc.data().username || userId;
+        } else {
+          displayName = userId; // Use UID if no other name is found
+        }
+      }
         setUsername(displayName);
   
         // Fetch User Data for Profile and Cover Image
