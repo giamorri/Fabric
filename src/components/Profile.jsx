@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { storage, db } from '../firebase';
+import { storage, db , auth} from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getDocs } from 'firebase/firestore';
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-
+import {  onSnapshot,collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { query, where } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';  
 import './Profile.css';
 
 const Profile = () => {
@@ -27,43 +28,54 @@ const Profile = () => {
   const [notification, setNotification] = useState(false); // Add state for showing notification
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (user) => {
       try {
-        // 1. Fetch User Data for Profile and Cover Image
-        const storedUsername = localStorage.getItem('username');
-        if (storedUsername) {
-          setUsername(storedUsername);
-          const userDocRef = doc(db, 'users', storedUsername);
-          const userDoc = await getDoc(userDocRef);
-          
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
-            setCoverImage(userData.coverImage || 'path/to/default-cover.jpg');
-          } else {
-            console.log("User document doesn't exist.");
-          }
+        const userId = user.uid;
+        const displayName = user.displayName || userId;
+        setUsername(displayName);
+  
+        // Fetch User Data for Profile and Cover Image
+        const userDocRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
+          setCoverImage(userData.coverImage || 'path/to/default-cover.jpg');
         }
   
-        // 2. Fetch Posts Data
-        const querySnapshot = await getDocs(collection(db, 'posts'));
-        const loadedPosts = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setPosts(loadedPosts);
-        console.log("Posts loaded:", loadedPosts);
-  
+        // Fetch posts only created by this user
+        const postsQuery = query(
+          collection(db, 'posts'),
+          where('userId', '==', userId)
+        );
+        onSnapshot(postsQuery, (snapshot) => {
+          const loadedPosts = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setPosts(loadedPosts);
+          console.log("Posts loaded:", loadedPosts);
+        });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
   
-    fetchData();
-  }, []); // Only run once on component mount
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchData(user);
+      } else {
+        console.log("User is not authenticated.");
+        // Optional: Redirect to login page
+        // navigate('/login');
+      }
+    });
   
-  
-  
+    return () => unsubscribe();
+  }, []);
+
+
+
   // Function to handle toggling likes
   const toggleLike = () => {
     if (currentPost) {
@@ -165,30 +177,38 @@ const triggerFileInput = (inputRef) => {
  const handlePostSubmit = async () => {
   if (postImage && caption) {
     try {
-      // Save the post to Firestore
+      // Ensure user is authenticated
+      const user = auth.currentUser;
+      if (!user) {
+        console.error("User is not authenticated.");
+        return;
+      }
+      
       const newPost = {
-        image: postImage,      // URL of the uploaded image
-        caption,               // Caption for the post
-        liked: false,          // Initial liked state
-        likes: 0,              // Initialize likes to 0
-        comments: [],          // Initialize with an empty comments array
-        username,              // Store username for referencing user
-        createdAt: serverTimestamp(), // Store the timestamp for ordering posts
+        image: postImage,
+        caption,
+        liked: false,
+        likes: 0,
+        comments: [],
+        username, // You might use `user.displayName` if available
+        userId: user.uid, // Store the UID for reference
+        createdAt: serverTimestamp(),
       };
 
       // Add the new post to Firestore
       await addDoc(collection(db, 'posts'), newPost);
 
-      // Update the local state to display the new post immediately
-      setPosts([newPost, ...posts]); // Add new post at the top
+      // Update local state
+      setPosts([newPost, ...posts]);
       setPostImage(null);
       setCaption('');
-      setIsModalOpen(false); // Close the modal
+      setIsModalOpen(false);
     } catch (error) {
       console.error('Error creating new post:', error);
     }
   }
 };
+
   // Open post view modal
   const openPostViewModal = (post) => {
     setCurrentPost(post);
@@ -267,19 +287,20 @@ const triggerFileInput = (inputRef) => {
 
       {/* Display user posts */}
       <div className="posts-section">
-        {posts.length > 0 ? (
-          posts.map((post, index) => (
-            <div key={post.id} className="post-item" onClick={() => openPostViewModal(post)}>
-              <img src={post.image} alt="User Post" className="post-image" />
-              <div className="post-info">
-                <p>{post.caption}</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="no-posts-message">No posts yet. Upload your first post!</p>
-        )}
+  {posts.length > 0 ? (
+    posts.map((post, index) => (
+      <div key={post.id || index} className="post-item" onClick={() => openPostViewModal(post)}>
+    <img src={post.image} alt="User Post" className="post-image" />
+    <div className="post-info">
+          <p>{post.caption}</p>
+        </div>
       </div>
+    ))
+  ) : (
+    <p className="no-posts-message">No posts yet. Upload your first post!</p>
+  )}
+</div>
+
 
       {/* Modal for viewing a post */}
       {isPostViewModalOpen && currentPost && (
