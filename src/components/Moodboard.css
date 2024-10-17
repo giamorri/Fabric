@@ -7,11 +7,21 @@
   .controls {
     flex: 1;
     margin-right: 20px;
+   
+    
+    padding: 20px;
+    background-color: #343641ce;
+    color: #fff;
+    border-radius: 10px;
+    max-width: 400px;
+    line-height: 1.5;
+    text-align: center; /* Center the text */
   }
   
   .controls input[type="range"] {
     display: block;
     margin: 10px 0;
+    
   }
   
   .mannequin-area {

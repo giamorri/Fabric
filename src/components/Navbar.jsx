@@ -43,7 +43,7 @@ const Navbar = () =>
         <li><Link to="/Profile">PROFILE</Link></li>
         <li><Link to="/Moodboard">CLOSET</Link></li>
         <li><Link to="/Settings">SETTINGS</Link></li>
-        <li><Link to="/Contact">CONTACT</Link></li>
+        
       
         {!isLoggedIn ? (
           <li 

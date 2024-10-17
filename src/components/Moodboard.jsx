@@ -9,19 +9,19 @@ const Moodboard = () => {
   const [closet, setCloset] = useState([]); 
   const [outfits, setOutfits] = useState([]); 
 
-  //background removal api can be added here
+  //background removal api can be added here later
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const imageUrl = URL.createObjectURL(file); 
     setCloset([...closet, imageUrl]); 
   };
 
-  // Save the current layout as an outfit
+  //save the current layout as an outfit
   const saveOutfit = () => {
     setOutfits([...outfits, closet]); 
   };
 
-  // Discard the current layout
+  //discard the current layout
   const discardOutfit = () => {
     setCloset([]); 
   };

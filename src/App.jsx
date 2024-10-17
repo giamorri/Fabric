@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Settings from './components/Settings';
-import Contact from './components/Contact';
+
 import Signup from './components/Signup';
 import Signin from './components/Signin';
 import PostDetails from './components/PostDetails';
@@ -30,7 +30,7 @@ const App = ({ onImageChange }) => {
             <Route path="/Home" element={<Home />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/Settings" element={<Settings onImageChange={handleImageChange} />} />
-            <Route path="/Contact" element={<Contact />} />
+            
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Signin" element={<Signin />} />
             <Route path="/post/:postId" element={<PostDetails />} />  
