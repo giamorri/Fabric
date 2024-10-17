@@ -1,34 +1,45 @@
 import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore'; // Import Firestore functions
+import { db } from '../firebase'; // Make sure you import your firebase config
 import './Header.css';
 
 const Home = () => {
-  const [images, setImages] = useState([]);
+  const [posts, setPosts] = useState([]); // Store all posts
 
+  // Function to shuffle array elements randomly
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
 
   useEffect(() => {
-    // Example mock data
-    const mockImages = [
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 1' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 2' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 3' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 4' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 5' }
-    ];
-    setImages(mockImages);
-  }, []);
+    const fetchPosts = async () => {
+      try {
+        const postsSnapshot = await getDocs(collection(db, 'posts')); // Fetch all posts
+        const loadedPosts = postsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        // Shuffle posts so that they appear randomly
+        const shuffledPosts = shuffleArray(loadedPosts);
+        setPosts(shuffledPosts); // Set posts to state
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
   return (
     <div className="home">
-      <h1 className="header">Welcome to the Home Page</h1>
       <div className="content-container">
-        {images.map((image, index) => (
+        {posts.map((post, index) => (
           <div key={index} className="item">
             <div className="square">
-              <img src={image.url} alt={image.description} className="square-image" />
+              <img src={post.image} alt={post.caption} className="square-image" />
             </div>
-            <div className="rectangle">
-              <p className="caption">This is a placeholder caption area for a social media post.</p>
-            </div>
+            {/* Caption removed */}
           </div>
         ))}
       </div>

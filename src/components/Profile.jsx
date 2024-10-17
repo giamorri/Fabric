@@ -7,6 +7,7 @@ import {  onSnapshot,collection, addDoc, serverTimestamp } from 'firebase/firest
 import { query, where } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';  
 import './Profile.css';
+import { deleteDoc } from 'firebase/firestore';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -221,6 +222,24 @@ const triggerFileInput = (inputRef) => {
   }
 };
 
+const handleDeletePost = async (postId) => {
+  try {
+    // Reference the specific post document in Firestore
+    const postDocRef = doc(db, 'posts', postId);
+    
+    // Delete the document from Firestore
+    await deleteDoc(postDocRef);
+    
+    // Update the local posts state to remove the deleted post
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    
+    console.log("Post deleted successfully");
+  } catch (error) {
+    console.error("Error deleting post:", error);
+  }
+};
+
+
   // Open post view modal
   const openPostViewModal = (post) => {
     setCurrentPost(post);
@@ -344,6 +363,7 @@ const triggerFileInput = (inputRef) => {
                     <div className="menu-options" onClick={(e) => e.stopPropagation()}>
                       <button onClick={downloadImage}>Download</button>
                       <button onClick={handleShare}>Share</button>
+                      <button onClick={() => handleDeletePost(currentPost.id)}>Delete</button>
                     </div>
                   )}
                 </div>
