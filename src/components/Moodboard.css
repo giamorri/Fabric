@@ -1,0 +1,56 @@
+.moodboard {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .controls {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .controls input[type="range"] {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  .mannequin-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    transition: width 0.2s ease, height 0.2s ease; /* smooth resizing */
+  }
+  
+  .mannequin {
+    position: relative;
+    width: 200%;
+    height: 200%;
+  }
+  
+  .mannequin-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* keep aspect ratio and prevent distortion */
+  }
+  
+  .clothing-item {
+    max-width: 200px; 
+    height: auto; 
+    position: absolute;
+    cursor: move;
+  }
+  
+  .closet {
+    flex: 1;
+    margin-left: 20px;
+  }
+  
+  .closet-item {
+    width: 100px;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+  }
+  

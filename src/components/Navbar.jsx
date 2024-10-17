@@ -41,8 +41,11 @@ const Navbar = () =>
       <ul className="navbar-list">
         <li><Link to="/Home">HOME</Link></li>
         <li><Link to="/Profile">PROFILE</Link></li>
-        
-         {!isLoggedIn ? (
+        <li><Link to="/Moodboard">CLOSET</Link></li>
+        <li><Link to="/Settings">SETTINGS</Link></li>
+        <li><Link to="/Contact">CONTACT</Link></li>
+      
+        {!isLoggedIn ? (
           <li 
             className="dropdown" 
             onMouseEnter={handleMouseEnter} 
@@ -64,9 +67,8 @@ const Navbar = () =>
           </li>
         )}
 
-        <li><Link to="/Settings">SETTINGS</Link></li>
-        <li><Link to="/Contact">CONTACT</Link></li>
-      
+
+
       </ul>
     </nav>
   );
