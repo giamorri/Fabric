@@ -7,6 +7,7 @@ import Settings from './components/Settings';
 import Contact from './components/Contact';
 import Signup from './components/Signup';
 import Signin from './components/Signin';
+import PostDetails from './components/PostDetails';
 import Moodboard from './components/Moodboard'; 
 import './components/Moodboard.css'; 
 
@@ -17,7 +18,10 @@ const App = ({ onImageChange }) => {
     setBackgroundImage(newImage);
   };
 
+
+
   return (
+
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <Router>
         <Navbar />
@@ -29,6 +33,7 @@ const App = ({ onImageChange }) => {
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Signin" element={<Signin />} />
+            <Route path="/post/:postId" element={<PostDetails />} />  
             <Route path="/Moodboard" element={<Moodboard />} /> 
           </Routes>
         </div>

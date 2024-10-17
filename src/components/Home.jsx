@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Home = () => {
-  const [images, setImages] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
+  // Function to shuffle array elements randomly
+  const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
   useEffect(() => {
-    // Example mock data
-    const mockImages = [
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 1' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 2' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 3' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 4' },
-      { url: 'https://via.placeholder.com/400', description: 'Placeholder Image 5' }
-    ];
-    setImages(mockImages);
+    const fetchPosts = async () => {
+      try {
+        const postsSnapshot = await getDocs(collection(db, 'posts'));
+        const loadedPosts = postsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setPosts(shuffleArray(loadedPosts));
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
   }, []);
+
+  // Handler for clicking a post
+  const handlePostClick = (postId) => {
+    navigate(`/post/${postId}`);
+  };
 
   return (
     <div className="home">
-      <h1 className="header">Welcome to the Home Page</h1>
       <div className="content-container">
-        {images.map((image, index) => (
-          <div key={index} className="item">
+        {posts.map((post, index) => (
+          <div key={index} className="item" onClick={() => handlePostClick(post.id)}>
             <div className="square">
-              <img src={image.url} alt={image.description} className="square-image" />
-            </div>
-            <div className="rectangle">
-              <p className="caption">This is a placeholder caption area for a social media post.</p>
+              <img src={post.image} alt={post.caption} className="square-image" />
             </div>
           </div>
         ))}

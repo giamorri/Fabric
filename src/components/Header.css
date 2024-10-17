@@ -1,62 +1,67 @@
-/* Header.css */
-
+/* Home Page Layout */
 .home {
   padding: 20px;
 }
 
+/* Header */
 .header {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 30px;
   background-color: #343641;
-  border-radius: 8px;
-}
-
-/* Masonry grid container */
-.content-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust column width */
-  gap: 15px; /* Space between items */
-  grid-auto-flow: dense; /* Enables the Masonry effect */
-}
-
-.item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #343641;
+  color: #ffffff;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+}
+
+/* Masonry Grid Container */
+.content-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Flexible columns */
+  gap: 15px; /* Space between items */
+}
+
+/* Individual Post Item */
+.item {
+  background-color: #2d2e35; /* Darker background for posts */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
 }
 
 .item:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Square Image Container */
 .square {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  padding-top: 100%; /* Makes it a square by setting height to 100% of width */
+  position: relative; /* Position for absolute positioning of image */
   border-radius: 8px;
+  overflow: hidden;
 }
 
+/* Image inside the square */
 .square-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover; /* Crop the image to fit within the square */
 }
 
+/* Caption Container */
 .rectangle {
   margin-top: 10px;
+  text-align: center;
+  padding: 10px;
+  background-color: #343641;
+  border-radius: 8px;
   width: 100%;
 }
 
-.caption {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #a7a7a7;
-}
