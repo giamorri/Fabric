@@ -5,9 +5,9 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Settings from './components/Settings';
 import Contact from './components/Contact';
-
 import Signup from './components/Signup'; 
 import Signin from './components/Signin';
+import PostDetails from './components/PostDetails';
 
 const App = () => {
   return (
@@ -20,7 +20,8 @@ const App = () => {
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Signup" element={<Signup />} /> 
-          <Route path="/Signin" element={<Signin />} />  
+          <Route path="/Signin" element={<Signin />} /> 
+          <Route path="/post/:postId" element={<PostDetails />} />  
         </Routes>
       </div>
     </Router>
