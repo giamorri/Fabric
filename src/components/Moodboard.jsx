@@ -2,62 +2,31 @@ import React, { useState } from "react";
 import Draggable from "react-draggable"; 
 import mannequin from './images/masc-mannequinn.jpeg';
 
-
 const Moodboard = () => {
-  const [width, setWidth] = useState(300);
-  const [height, setHeight] = useState(500); 
+  const [width, setWidth] = useState(400);
+  const [height, setHeight] = useState(600); 
   const [closet, setCloset] = useState([]); 
   const [outfits, setOutfits] = useState([]); 
 
-  //background removal api can be added here later
+  // background removal api can be added here later
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const imageUrl = URL.createObjectURL(file); 
     setCloset([...closet, imageUrl]); 
   };
 
-  //save the current layout as an outfit
+  // save the current layout as an outfit
   const saveOutfit = () => {
     setOutfits([...outfits, closet]); 
   };
 
-  //discard the current layout
+  // discard the current layout
   const discardOutfit = () => {
     setCloset([]); 
   };
 
   return (
-    <div className="moodboard">
-      <div className="controls">
-        <h2>Closet</h2>
-
-        
-        <label>Width:</label>
-        <input
-          type="range"
-          min="200"
-          max="600"
-          value={width}
-          onChange={(e) => setWidth(e.target.value)}
-        />
-        <label>Height:</label>
-        <input
-          type="range"
-          min="300"
-          max="700"
-          value={height}
-          onChange={(e) => setHeight(e.target.value)}
-        />
-
-        
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-
-       
-        <button onClick={saveOutfit}>Save Outfit</button>
-        <button onClick={discardOutfit}>Discard Outfit</button>
-      </div>
-
-     
+    <div className="moodboard"> {/* Wrap everything in a single div */}
       <div
         className="mannequin-area"
         style={{ width: `${width}px`, height: `${height}px` }}
@@ -76,6 +45,31 @@ const Moodboard = () => {
           ))}
         </div>
       </div>
+      
+
+      <div className="controlsandcloset">
+      <div className="controls">
+        <h2>Controls</h2>
+        <label>Width:</label>
+        <input
+          type="range"
+          min="200"
+          max="500"
+          value={width}
+          onChange={(e) => setWidth(e.target.value)}
+        />
+        <label>Height:</label>
+        <input
+          type="range"
+          min="400"
+          max="800"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+        />
+        <input type="file" accept="image/*" onChange={handleImageUpload} />     
+        <button onClick={saveOutfit}>Save Outfit</button>
+        <button onClick={discardOutfit}>Discard Outfit</button>
+      </div>
 
       <div className="closet">
         <h3>Closet</h3>
@@ -83,6 +77,7 @@ const Moodboard = () => {
           <img key={index} src={item} alt="Clothing item" className="closet-item" />
         ))}
       </div>
+    </div>
     </div>
   );
 };

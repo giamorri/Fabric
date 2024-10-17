@@ -1,30 +1,13 @@
 .moodboard {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row; /* Stack elements horizontally */
+    justify-content: space-between; /* Space between mannequin area and controls */
     padding: 20px;
-  }
-  
-  .controls {
-    flex: 1;
-    margin-right: 20px;
-   
-    
-    padding: 20px;
-    background-color: #343641ce;
-    color: #fff;
-    border-radius: 10px;
-    max-width: 400px;
-    line-height: 1.5;
-    text-align: center; /* Center the text */
-  }
-  
-  .controls input[type="range"] {
-    display: block;
-    margin: 10px 0;
-    
+    height: 100vh; /* Ensure the moodboard takes the full height of the viewport */
   }
   
   .mannequin-area {
+    flex: 1; /* Allow mannequin area to grow and fill the remaining space */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,6 +28,23 @@
     object-fit: contain; /* keep aspect ratio and prevent distortion */
   }
   
+  .controls {
+    flex: 0 0 400px; /* Fixed width for the controls */
+    padding: 20px;
+    background-color: #343641ce;
+    color: #fff;
+    border-radius: 10px;
+    line-height: 1.5;
+    text-align: left; /* Align text to the left */
+    align-self: flex-start; /* Align controls to the start (top) of the flex container */
+    margin-left: 20px; /* Space between mannequin area and controls */
+  }
+  
+  .controls input[type="range"] {
+    display: block;
+    margin: 10px 0;
+  }
+  
   .clothing-item {
     max-width: 200px; 
     height: auto; 
@@ -55,6 +55,9 @@
   .closet {
     flex: 1;
     margin-left: 20px;
+    color: #fff;
+    background-color: #2a2c34ce;
+    
   }
   
   .closet-item {
@@ -62,5 +65,17 @@
     height: auto;
     margin: 10px;
     cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .moodboard {
+      flex-direction: column; /* Stack elements vertically on smaller screens */
+    }
+  
+    .controls {
+      
+      text-align: center; /* Center text for smaller screens */
+      margin-left: 0; /* Remove left margin on smaller screens */
+    }
   }
   
