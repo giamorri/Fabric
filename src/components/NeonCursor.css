@@ -1,0 +1,16 @@
+:root {
+    --trail-color: rgba(165, 105, 79, 0.7); /* Brownish-gold color */
+    --shadow-color: #c99b77; /* Softer gold shadow */
+    --shadow-blur: 15px; /* Amount of blur for the shadow */
+  }
+  
+  .neon-trail-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
