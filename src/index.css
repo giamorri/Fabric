@@ -1,9 +1,7 @@
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
@@ -11,24 +9,36 @@ body {
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply;
-  min-width: 300px;
-  height: 100vh;
-  
+  width: 100vw; /* Set width to fit the entire viewport */
+  height: 100vh; /* Set height to fit the viewport */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  box-sizing: border-box; /* Ensure padding and borders don't cause overflow */
 }
-
 
 nav {
   background-color: #333;
   color: #fff;
   padding: 10px;
+  box-sizing: border-box; /* Include padding in width calculation */
+  width: 100%; /* Ensure the nav spans the full width */
 }
 
 nav ul {
   display: flex;
+  list-style: none; /* Remove bullet points from list */
+  padding: 0;
+  margin: 0;
+  justify-content: space-between; /* Distribute items evenly across the nav */
+  align-items: center; /* Vertically center items */
+  flex-wrap: wrap; /* Allow nav items to wrap on smaller screens */
 }
 
 nav ul li {
   margin-right: 15px;
+}
+
+nav ul li:last-child {
+  margin-right: 0; /* Remove margin from last item */
 }
 
 nav ul li a {
@@ -44,4 +54,21 @@ nav ul li a:hover {
 
 .content {
   padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  nav ul {
+    flex-direction: column; /* Stack nav items vertically on small screens */
+    align-items: flex-start; /* Align nav items to the left */
+  }
+
+  nav ul li {
+    margin-bottom: 10px; /* Add space between stacked nav items */
+    margin-right: 0;
+  }
+
+  .content {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
 }

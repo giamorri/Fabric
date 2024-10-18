@@ -35,7 +35,7 @@ img {
   height: 30px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .navbar {
     position: fixed; /* Make the navbar stick to the bottom */
     bottom: 0; /* Navbar will now be at the bottom */
