@@ -1,42 +1,37 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable"; 
-import mannequin from './images/masc-mannequinn.jpeg';
+import mannequinSmall from './images/mannequin-small.jpeg';
+import mannequinMedium from './images/mannequin-medium.jpeg';
+import mannequinLarge from './images/mannequin-large.jpeg';
+import mannequinXLarge from './images/mannequin-xlarge.jpeg';
 
 const Moodboard = () => {
-  const [width, setWidth] = useState(400);
-  const [height, setHeight] = useState(600); 
+  const [selectedMannequin, setSelectedMannequin] = useState(mannequinMedium); // default size
   const [closet, setCloset] = useState([]); 
   const [outfits, setOutfits] = useState([]); 
 
-  // background removal api can be added here later
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const imageUrl = URL.createObjectURL(file); 
     setCloset([...closet, imageUrl]); 
   };
 
-  // save the current layout as an outfit
   const saveOutfit = () => {
     setOutfits([...outfits, closet]); 
   };
 
-  // discard the current layout
   const discardOutfit = () => {
     setCloset([]); 
   };
 
   return (
-    <div className="moodboard"> {/* Wrap everything in a single div */}
-      <div
-        className="mannequin-area"
-        style={{ width: `${width}px`, height: `${height}px` }}
-      >
-        <div className="mannequin" style={{ width: `${width}px`, height: `${height}px` }}>
+    <div className="moodboard">
+      <div className="mannequin-area">
+        <div className="mannequin">
           <img
-            src={mannequin}
+            src={selectedMannequin}
             alt="Mannequin"
             className="mannequin-image"
-            style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
           {closet.map((item, index) => (
             <Draggable key={index}>
@@ -45,39 +40,53 @@ const Moodboard = () => {
           ))}
         </div>
       </div>
-      
 
       <div className="controlsandcloset">
-      <div className="controls">
-        <h2>Controls</h2>
-        <label>Width:</label>
-        <input
-          type="range"
-          min="200"
-          max="500"
-          value={width}
-          onChange={(e) => setWidth(e.target.value)}
-        />
-        <label>Height:</label>
-        <input
-          type="range"
-          min="400"
-          max="800"
-          value={height}
-          onChange={(e) => setHeight(e.target.value)}
-        />
-        <input type="file" accept="image/*" onChange={handleImageUpload} />     
-        <button onClick={saveOutfit}>Save Outfit</button>
-        <button onClick={discardOutfit}>Discard Outfit</button>
-      </div>
+        <div className="controls">
+          <h2>Mannequin Sizes</h2>
+          <div className="mannequin-sizes" style={{ display: 'flex', gap: '10px' }}>
+            <img
+              src={mannequinSmall}
+              alt="Small Mannequin"
+              className="size-option"
+              onClick={() => setSelectedMannequin(mannequinSmall)}
+              style={{ cursor: 'pointer', width: '100px', height: '100px' }} // Make it clear the images are clickable
+            />
+            <img
+              src={mannequinMedium}
+              alt="Medium Mannequin"
+              className="size-option"
+              onClick={() => setSelectedMannequin(mannequinMedium)}
+              style={{ cursor: 'pointer', width: '100px', height: '100px' }}
+            />
+            <img
+              src={mannequinLarge}
+              alt="Large Mannequin"
+              className="size-option"
+              onClick={() => setSelectedMannequin(mannequinLarge)}
+              style={{ cursor: 'pointer', width: '100px', height: '100px' }}
+            />
+            <img
+              src={mannequinXLarge}
+              alt="Extra Large Mannequin"
+              className="size-option"
+              onClick={() => setSelectedMannequin(mannequinXLarge)}
+              style={{ cursor: 'pointer', width: '100px', height: '100px' }}
+            />
+          </div>
 
-      <div className="closet">
-        <h3>Closet</h3>
-        {closet.map((item, index) => (
-          <img key={index} src={item} alt="Clothing item" className="closet-item" />
-        ))}
+          <input type="file" accept="image/*" onChange={handleImageUpload} />     
+          <button onClick={saveOutfit}>Save Outfit</button>
+          <button onClick={discardOutfit}>Discard Outfit</button>
+        </div>
+
+        <div className="closet">
+          <h3>Closet</h3>
+          {closet.map((item, index) => (
+            <img key={index} src={item} alt="Clothing item" className="closet-item" />
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
