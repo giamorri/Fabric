@@ -4,8 +4,9 @@ import mannequinSmall from './images/mannequin-small.jpeg';
 import mannequinMedium from './images/mannequin-medium.jpeg';
 import mannequinLarge from './images/mannequin-large.jpeg';
 import mannequinXLarge from './images/mannequin-xlarge.jpeg';
+import './MannequinCloset.css';
 
-const Moodboard = () => {
+const MannequinCloset = () => {
   const [selectedMannequin, setSelectedMannequin] = useState(mannequinMedium); // default size
   const [closet, setCloset] = useState([]); 
   const [outfits, setOutfits] = useState([]); 
@@ -91,4 +92,4 @@ const Moodboard = () => {
   );
 };
 
-export default Moodboard;
+export default MannequinCloset;

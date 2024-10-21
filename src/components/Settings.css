@@ -1,27 +1,63 @@
-/* src/components/settings.css */
-.settings-container {
+/* App.css */
+.app-background {
+    background-size: cover; /* Ensures the image stretches to cover the screen */
+    background-repeat: repeat; /* Repeats the image if it ends */
+    background-attachment: fixed; /* Ensures background stays fixed when scrolling */
+    background-position: center center; /* Centers the image on the screen */
+    min-height: 100vh; /* Ensure the content fills the full viewport height */
+    width: 100vw; /* Full viewport width */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevents horizontal scroll */
+  }
+  
+  
+  
+  .settings-container {
     margin: 20px;
-}
-
-.image-grid {
+  }
+  
+  .settings-options {
     display: flex;
+    justify-content: space-between;
+  }
+  
+  .background-options {
+    flex: 1;
+    margin-right: 40px;
+  }
+  
+  .image-grid {
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-}
-
-.thumbnail {
+  }
+  
+  .thumbnail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .thumbnail {
     width: 100px;
     height: 100px;
     object-fit: cover;
     cursor: pointer;
     border: 2px solid transparent;
     transition: border 0.3s;
-}
-
-.thumbnail:hover {
+  }
+  
+  .thumbnail:hover {
     border: 2px solid #343641ce;
-}
-
-.contactBox {
+  }
+  
+  .thumbnail-container input {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .contactBox {
     margin-top: 40px;
     padding: 20px;
     background-color: #2e2f38ce;
@@ -29,5 +65,6 @@
     border-radius: 10px;
     max-width: 400px;
     line-height: 1.5;
-    text-align: center; /* Center the text */
-}
+    text-align: center;
+  }
+  

@@ -1,38 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Settings.css';
 
 const Settings = ({ onImageChange }) => {
-  // Stores the selected image's URL
-  const [image, setImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
 
-  // Handles image selection
-  const handleImageChange = (e) => {
-    const newImage = e.target.files[0]; //first file from the input
-    if (newImage) {
-      const imageUrl = URL.createObjectURL(newImage); //makes a temporary URL for the selected image
-      setImage(imageUrl); //updates to new image URL
-      onImageChange(imageUrl); //passes the new image
-    } else {
-      setImage(''); //if no image is selected, set to empty string
-    }
+  const backgroundImages = [
+    require('../background/1.webp'),
+    require('../background/2.webp'),
+    require('../background/3.webp'),
+    require('../background/4.webp'),
+    require('../background/5.webp'),
+    require('../background/6.webp'),
+    require('../background/7.webp'),
+    require('../background/8.webp'),
+    require('../background/9.webp'),
+    require('../background/10.webp'),
+    require('../background/image1.jpg'),
+  ];
+
+  const handleImageSelect = (event) => {
+    const newImage = event.target.value;
+    setSelectedImage(newImage);
+    onImageChange(newImage);
+    localStorage.setItem('selectedBackground', newImage); // Save in localStorage to persist
   };
+
+  useEffect(() => {
+    const savedImage = localStorage.getItem('selectedBackground');
+    if (savedImage) {
+      setSelectedImage(savedImage);
+      onImageChange(savedImage);
+    } else {
+      setSelectedImage(require('../background/image1.jpg')); // Default image
+      onImageChange(require('../background/image1.jpg'));
+    }
+  }, [onImageChange]);
 
   return (
     <div className="settings-container">
       <h2>Settings</h2>
-
-      
-      {/* image upload input */}
-      <input type="file" onChange={handleImageChange} accept="image/*" />
-
-      
-      {/* display the selected image */}
-      {image && <img src={image} alt="Selected background" style={{ width: '300px' }} />}
-
-      {/* contact the devs */}
+      <div className="settings-options">
+        <div className="background-options">
+          <h3>Select Background</h3>
+          <div className="image-grid">
+            {backgroundImages.map((image, index) => (
+              <label key={index} className="thumbnail-container">
+                <input
+                  type="radio"
+                  name="background"
+                  value={image}
+                  checked={selectedImage === image}
+                  onChange={handleImageSelect}
+                />
+                <img src={image} alt={`Background ${index + 1}`} className="thumbnail" />
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
       <div className="contactBox">
         <h3>Contact the Developers</h3>
-        <p>For any issues or inquiries, feel free to contact the development team:</p>
         <ul>
           <li><strong>Email:</strong> devteam@fabric.com</li>
           <li><strong>Phone:</strong> +123 456 7890</li>

@@ -1,0 +1,58 @@
+.closet-container {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #2a2c34; /* Dark background for the closet page */
+    color: #f4f4f4; /* Light text color */
+}
+
+.closet-container h1 {
+    font-size: 2.5rem;
+    color: #d1a354; /* A luxurious gold color for the title */
+    margin-bottom: 40px;
+}
+
+.closet-folders {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allow the folders to wrap on smaller screens */
+}
+
+.folder {
+    background-color: #3c3f51; /* Darker shade for the folders */
+    padding: 30px;
+    border-radius: 12px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* A bit stronger shadow */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.folder:hover {
+    background-color: #d1a354; /* Gold on hover for a luxury feel */
+    transform: scale(1.05); /* Slightly enlarge the folder on hover */
+}
+
+.folder a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #f4f4f4; /* Light text color */
+    font-size: 1.2rem;
+}
+
+.folder a:hover {
+    color: #2a2c34; /* Darker text color on hover */
+}
+
+@media (max-width: 768px) {
+    .closet-folders {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .folder {
+        width: 80%;
+        margin-bottom: 20px; /* Add space between folders on mobile */
+    }
+}

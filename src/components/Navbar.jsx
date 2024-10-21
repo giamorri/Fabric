@@ -41,7 +41,7 @@ const Navbar = () =>
       <ul className="navbar-list">
         <li><Link to="/Home">HOME</Link></li>
         <li><Link to="/Profile">PROFILE</Link></li>
-        <li><Link to="/Moodboard">CLOSET</Link></li>
+        <li><Link to="/Closet">CLOSET</Link></li>
         <li><Link to="/Settings">SETTINGS</Link></li>
         
       
