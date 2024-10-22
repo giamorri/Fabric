@@ -1,70 +1,67 @@
-/* App.css */
+body, .app-background {
+  background-size: auto; /* Keeps the image at its original size */
+  background-repeat: repeat; /* Repeats the image both horizontally and vertically */
+  background-attachment: fixed; /* Keeps the background fixed in place when scrolling */
+  background-position: center top; /* Ensures the background is aligned from the top center */
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
 .app-background {
-    background-size: cover; /* Ensures the image stretches to cover the screen */
-    background-repeat: repeat; /* Repeats the image if it ends */
-    background-attachment: fixed; /* Ensures background stays fixed when scrolling */
-    background-position: center center; /* Centers the image on the screen */
-    min-height: 100vh; /* Ensure the content fills the full viewport height */
-    width: 100vw; /* Full viewport width */
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevents horizontal scroll */
-  }
-  
-  
-  
-  .settings-container {
-    margin: 20px;
-  }
-  
-  .settings-options {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .background-options {
-    flex: 1;
-    margin-right: 40px;
-  }
-  
-  .image-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .thumbnail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .thumbnail {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border 0.3s;
-  }
-  
-  .thumbnail:hover {
-    border: 2px solid #343641ce;
-  }
-  
-  .thumbnail-container input {
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-  
-  .contactBox {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #2e2f38ce;
-    color: #fff;
-    border-radius: 10px;
-    max-width: 400px;
-    line-height: 1.5;
-    text-align: center;
-  }
-  
+  position: relative;
+  z-index: -1; /* Keeps the background behind other content */
+}
+
+/* Other settings-related CSS */
+.settings-container {
+  margin: 20px;
+}
+
+.settings-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.background-options {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.thumbnail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s;
+}
+
+.thumbnail:hover {
+  border: 2px solid #343641ce;
+}
+
+.contactBox {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #2e2f38ce;
+  color: #fff;
+  border-radius: 10px;
+  max-width: 400px;
+  line-height: 1.5;
+  text-align: center;
+}
