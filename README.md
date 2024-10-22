@@ -11,13 +11,13 @@
  - react-router-dom": "^6.26.1"
  - react-scripts": "^5.0.1"
  for the above react libraries you can run:
->"npm react-scripts"
+>`npm react-scripts`
 
->"npm react-router-dom"
+>`npm react-router-dom`
 
->"npm react-resizable"
+>`npm react-resizable`
 
->"npm react-draggable"
+>`npm react-draggable`
 
   - git 2.46.0 (not required but noted just in case)
 
