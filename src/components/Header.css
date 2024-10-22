@@ -71,17 +71,25 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  position: relative; /* To position the icon inside the input field */
 }
 
 /* Search Input Field */
+/* Search Input Field with Icon Inside */
 .search-bar input[type="text"] {
   width: 300px;
-  padding: 10px;
+  padding: 10px 40px; /* Padding adjusted for space on both sides */
   font-size: 16px;
   border: 2px solid #8b5e3c; /* Adjust the color to match your design */
   border-radius: 8px;
   outline: none;
   transition: all 0.3s ease;
+  
+  /* Add the search icon as a background image */
+  background-image: url('images/search.png');
+  background-position: 10px center; /* Adjust the position of the icon inside the input */
+  background-repeat: no-repeat;
+  background-size: 20px 20px; /* Adjust size of the icon */
 }
 
 /* On Focus: Change Border Color */
@@ -89,20 +97,19 @@
   border-color: #b78b5b;
 }
 
-/* Search Button */
-.search-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  padding: 5px;
-}
 
-.search-button img {
+/* Search Icon Inside Input */
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 25px;
   height: 25px;
-  object-fit: contain;
+  pointer-events: none; /* Makes sure the icon doesn't interfere with clicking in the input */
 }
+
+
 
 /* Style for the Search Results */
 .search-results {
@@ -139,7 +146,7 @@
 /* Text Style for the Username */
 .search-item p {
   margin: 0;
-  color: #fff;
+  color: #a17553;
   font-size: 16px;
   font-weight: bold;
 }
@@ -153,14 +160,14 @@
   align-items: center;
   cursor: pointer;
   padding: 10px;
-  background-color: #f1f1f1;
+  background-color:#444;
   border-radius: 8px;
   margin-bottom: 10px;
   transition: background-color 0.3s;
 }
 
 .search-item:hover {
-  background-color: #e0e0e0;
+  background-color: #444;
 }
 
 .search-user-image {

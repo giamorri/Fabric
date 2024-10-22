@@ -78,16 +78,14 @@ const Home = () => {
     <div className="home">
       {/* Search Bar */}
       <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search for users..."
-          value={searchQuery}
-          onChange={handleSearch}
-        />
-        <button className="search-button">
-          <img src="/images/search.png" alt="Search" />
-        </button>
-      </div>
+  <input
+    type="text"
+    placeholder="Search for users..."
+    value={searchQuery}
+    onChange={handleSearch}
+  />
+</div>
+
 
       {/* Conditionally show search results or all posts */}
       {searchQuery && filteredUsers.length > 0 && (
