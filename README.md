@@ -11,14 +11,16 @@
  - react-router-dom": "^6.26.1"
  - react-scripts": "^5.0.1"
 
- #### for the above react libraries you can run:
->`npm react-scripts`
+ #### for the above react libraries and firebase you can run:
+>`npm install react-scripts`
 
->`npm react-router-dom`
+>`npm install react-router-dom`
 
->`npm react-resizable`
+>`npm install react-resizable`
 
->`npm react-draggable`
+>`npm install react-draggable`
+
+>`npm install firebase`
 
   - git 2.46.0 (not required but noted just in case)
 
