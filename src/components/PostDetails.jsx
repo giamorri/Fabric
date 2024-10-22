@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; // Import Link to navigate to the user profile
 import { db } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import './Profile.css';
@@ -139,7 +139,9 @@ const PostDetails = () => {
         <div className="post-right">
           <img src={post.image} alt="Post" className="image-preview-large" />
           <img src={profileImage} alt="Profile" className="profile-picture-small" />
-          <p className="username-above">@{username}</p>
+          <p className="username-above">
+            <Link to={`/user/${post.userId}`}>@{username}</Link> {/* Link to user profile */}
+          </p>
         </div>
       </div>
       

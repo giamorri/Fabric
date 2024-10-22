@@ -12,6 +12,7 @@ import Closet from './components/Closet';
 import SavedCloset from './components/SavedCloset'; 
 import HomeCloset from './components/HomeCloset';
 import MannequinCloset from './components/MannequinCloset'; 
+import UserProfile from './components/UserProfile';
 
 const App = ({ onImageChange }) => {
   const [backgroundImage, setBackgroundImage] = useState('image1.jpg');
@@ -40,6 +41,7 @@ const App = ({ onImageChange }) => {
             <Route path="/SavedCloset" element={<SavedCloset />} />
             <Route path="/HomeCloset" element={<HomeCloset />} />
             <Route path="/MannequinCloset" element={<MannequinCloset />} />
+            <Route path="/user/:userId" element={<UserProfile />} />
           </Routes>
         </div>
       </Router>
