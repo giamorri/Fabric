@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: flex-start;
   position: fixed;
-  top: 7px;
+  top: -7px;
   left: 10px;
   z-index: 1001;
 }
@@ -52,7 +52,7 @@ img {
     display: flex;
     justify-content: flex-start;
     position: fixed;
-    top: 7px;
+    top: -7px;
     left: 10px;
     z-index: 1001;
   }

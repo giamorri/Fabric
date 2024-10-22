@@ -17,6 +17,17 @@ body, .app-background {
 
 .settings-container {
   margin: 20px;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #2e2f38ce;
+  color: #fff;
+  border-radius: 10px;
+  line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
 }
 
 .settings-options {
@@ -27,6 +38,7 @@ body, .app-background {
 .background-options {
   flex: 1;
   margin-right: 40px;
+  
 }
 
 .image-grid {
@@ -64,7 +76,6 @@ body, .app-background {
 .contactBox {
   margin-top: 40px;
   padding: 20px;
-  background-color: #2e2f38ce;
   color: #fff;
   border-radius: 10px;
   max-width: 400px;

@@ -32,13 +32,14 @@ const Settings = () => {
 
   return (
     <div className="settings-container">
-      <h2>Settings</h2>
+      
 
       {/* Backgrounds Section */}
       <div className="settings-options">
         <div className="background-options">
+        <h2>Settings</h2>
           <h3>Backgrounds (Coming Soon)</h3>
-          <p className="coming-soon-text">You can select an image, but this feature is coming soon!</p>
+          <p className="coming-soon-text">You can't select an image, but this feature is coming soon!</p>
           <div className="image-grid">
             {backgroundImages.map((image, index) => (
               <label key={index} className="thumbnail-container">
