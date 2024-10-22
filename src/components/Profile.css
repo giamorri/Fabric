@@ -451,3 +451,33 @@
 }
 
 
+/* Hide the default file input */
+input[type="file"] {
+  display: none;
+}
+
+/* Custom label styled as button */
+.file-upload-button {
+  background-color: rgb(191, 141, 93);
+  color: #fff;
+  padding: 10px 15px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.file-upload-button:hover {
+  background-color: #8b5e3c;
+}
+
+
+.modal-content h5 {
+  font-size: 14px; /* Smaller font size */
+  font-style: italic; /* Italic font */
+  color: #c0c0c0; /* You can change the color if needed */
+  margin-bottom: 20px; /* Space between the text and the input field */
+}

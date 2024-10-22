@@ -9,13 +9,16 @@ import { onAuthStateChanged } from 'firebase/auth';
 import './Profile.css';
 import { deleteDoc } from 'firebase/firestore';
 
+import defaultCover from './images/cover.png';
+import defaultProfile from './images/pfp.jpg';
+
 const Profile = () => {
   const [username, setUsername] = useState('');
   const profileInputRef = useRef(null);
   const coverInputRef = useRef(null);
 
-  const [profileImage, setProfileImage] = useState('path/to/default-profile.jpg'); 
-  const [coverImage, setCoverImage] = useState('path/to/default-cover.jpg'); 
+  const [profileImage, setProfileImage] = useState(defaultProfile);
+  const [coverImage, setCoverImage] = useState(defaultCover);
 
   const [isModalOpen, setIsModalOpen] = useState(false); // For post creation modal
   const [isPostViewModalOpen, setIsPostViewModalOpen] = useState(false); // For viewing a post modal
@@ -43,13 +46,13 @@ const Profile = () => {
   
           // Set displayName, profileImage, and coverImage in state
           setUsername(userData.username || user.displayName || userId);
-          setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
-          setCoverImage(userData.coverImage || 'path/to/default-cover.jpg');
+          setProfileImage(userData.profileImage || defaultProfile);
+          setCoverImage(userData.coverImage || defaultCover);
         } else {
           // If no user document exists, set fallback values
           setUsername(user.displayName || userId);
-          setProfileImage('path/to/default-profile.jpg');
-          setCoverImage('path/to/default-cover.jpg');
+          setProfileImage(defaultProfile);
+          setCoverImage(defaultCover);
         }
   
         // Fetch posts created by this user
@@ -247,7 +250,7 @@ const handleDeletePost = async (postId) => {
     <div className="profile-container">
       <div className="profile-header">
       <div className="cover-photo" onClick={() => triggerFileInput(coverInputRef)}>
-        <img src={coverImage || 'path/to/default-cover.jpg'} alt="Cover" className="cover-photo-img" />
+        <img src={coverImage || defaultCover} alt="Cover" className="cover-photo-img" />
 
           <div className="upload-overlay">
             <span>Upload Cover Photo</span>
@@ -261,7 +264,7 @@ const handleDeletePost = async (postId) => {
           />
         </div>
         <div className="profile-picture-container" onClick={() => triggerFileInput(profileInputRef)}>
-        <img src={profileImage || 'path/to/default-profile.jpg'} alt="Profile" className="profile-picture" />
+        <img src={profileImage || defaultProfile} alt="Profile" className="profile-picture" />
 
           <div className="upload-overlay">
             <span>Upload Profile Picture</span>
@@ -288,12 +291,17 @@ const handleDeletePost = async (postId) => {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>Upload Image and Add Caption</h3>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(event) => handleImageUpload(event, setPostImage)}
-            />
+            <h3>Show Off Your Style!</h3>
+            <h5>Upload your latest outfit and let the world see your fashion sense!</h5>
+            <label className="file-upload-button" htmlFor="file-upload">
+    choose outfit 
+  </label>
+  <input
+    id="file-upload"
+    type="file"
+    accept="image/*"
+    onChange={(event) => handleImageUpload(event, setPostImage)}
+  />
             {postImage && <img src={postImage} alt="Preview" className="image-preview" />}
             <input
               type="text"
