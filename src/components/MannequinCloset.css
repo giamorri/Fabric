@@ -1,55 +1,61 @@
+
 .moodboard {
   display: flex;
-  flex-direction: row; /* Stack elements horizontally */
-  justify-content: space-between; /* Space between mannequin area and controls */
+  flex-direction: row; /* Horizontal stacking of elements */
+  justify-content: space-between;
   padding: 20px;
-  height: 100vh; /* Ensure the moodboard takes the full height of the viewport */
-  max-width: 100vw; /* Prevent it from overflowing */
-  box-sizing: border-box; /* Include padding in width calculation */
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  height: 80vh;
+  box-sizing: border-box;
 }
 
 .mannequin-area {
-  flex: 1; /* Allow mannequin area to grow and fill the remaining space */
+  flex: 1 1 50%; /* Take up the left half of the screen */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Center the mannequin horizontally */
+  align-items: center; /* Center the mannequin vertically */
   border: 1px solid #343641;
   background-color: #343641;
-  transition: width 0.2s ease, height 0.2s ease; /* Smooth resizing */
-  max-width: 100%; /* Ensure the mannequin area doesn't overflow */
+  transition: width 0.2s ease, height 0.2s ease;
+  box-sizing: border-box;
+  height: 100%; /* Ensure it fills the height */
 }
 
 .mannequin {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-height: 80vh; /* Limit the mannequin height to 80% of the viewport */
+  object-fit: contain; /* Maintain aspect ratio */
 }
 
 .mannequin-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Keep aspect ratio and prevent distortion */
+  width: auto;
+  height: 80%; /* Default height is 80% of the mannequin area */
+  max-height: 80vh; /* Ensure it doesn’t grow more than 80% of the viewport */
+  object-fit: contain; /* Keep aspect ratio */
+}
+
+.mannequin-image.large {
+  max-height: 80vh; /* Largest mannequin fills 80% of the viewport */
+  width: auto; /* Auto width to maintain aspect ratio */
 }
 
 .controls {
-  flex-shrink: 0; /* Prevent controls from shrinking too much */
-  padding: 10px;
+  flex: 0 0 25%; /* Fixed width for controls */
+  padding: 20px;
   background-color: #343641ce;
   color: #fff;
   border-radius: 10px;
   line-height: 1.5;
-  text-align: left; /* Align text to the left */
-  width: 300px; /* Fixed width for the controls */
-  max-width: 100%; /* Ensure controls don’t exceed the viewport width */
-  box-sizing: border-box;
+  text-align: left;
+  align-self: flex-start;
   margin-left: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Allow vertical scroll if content overflows */
 }
 
 .controls input[type="range"] {
   display: block;
   margin: 10px 0;
-  width: 100%; /* Make sure the range input fits within the controls */
 }
 
 .clothing-item {
@@ -64,6 +70,7 @@
   margin-left: 20px;
   color: #fff;
   background-color: #2a2c34ce;
+  box-sizing: border-box;
 }
 
 .closet-item {
@@ -73,18 +80,61 @@
   cursor: pointer;
 }
 
-@media (max-width: 700px) {
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .controls {
+    flex: 0 0 30%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .controls {
+    flex: 0 0 35%;
+    padding: 12px;
+    font-size: 90%;
+  }
+}
+
+@media (max-width: 768px) {
   .moodboard {
-    flex-direction: column; /* Stack elements vertically on smaller screens */
-    height: auto; /* Let height adjust naturally */
-    max-width: 100vw; /* Ensure the entire layout fits within the viewport */
-    padding: 10px; /* Adjust padding for smaller screens */
+    flex-direction: column;
+    padding-top: 50px;
   }
 
   .controls {
-    text-align: center; /* Center text for smaller screens */
-    margin-left: 0; /* Remove left margin on smaller screens */
-    width: 100%; /* Full width for controls on smaller screens */
-    max-width: 100%; /* Ensure controls don’t exceed the viewport width */
+    flex: 0 0 100%;
+    margin-left: 0;
+    padding: 10px;
+    font-size: 85%;
+  }
+
+  .closet {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .controls input[type="range"] {
+    width: 100%;
+  }
+
+  .mannequin-area {
+    width: 100%;
+    height: 60vw; /* Set the height relative to the viewport width */
+    justify-content: center; /* Ensure mannequin remains horizontally centered */
+    align-items: flex-start; /* Align mannequin to the top */
+  }
+
+  .mannequin {
+    width: 50%;
+    height: auto;
+    max-height: 80vh; /* Limit to 80% of the viewport height */
+  }
+
+  .mannequin-image {
+    width: 100%; 
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain;
   }
 }
+

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { db } from '../firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs, updateDoc } from 'firebase/firestore';
 import './Profile.css';
+import './PostDetails.css';
 
 const PostDetails = () => {
   const { postId } = useParams(); // Get the post ID from the URL
   const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]); // Store related posts (from the same user)
+  const [randomPosts, setRandomPosts] = useState([]); // Store random posts (from other users)
   const [comment, setComment] = useState('');
   const [profileImage, setProfileImage] = useState('path/to/default-profile.jpg');
   const [username, setUsername] = useState('');
@@ -31,6 +34,27 @@ const PostDetails = () => {
             setUsername(userData.username || postData.userId);
             setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
           }
+
+          // Fetch related posts from the same user
+          const relatedPostsQuery = query(
+            collection(db, 'posts'),
+            where('userId', '==', postData.userId)
+          );
+          const relatedPostsSnapshot = await getDocs(relatedPostsQuery);
+          const relatedPostsData = relatedPostsSnapshot.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter((p) => p.id !== postId); // Exclude the current post
+
+          setRelatedPosts(relatedPostsData);
+
+          // Fetch random posts (not from the current user)
+          const randomPostsSnapshot = await getDocs(collection(db, 'posts'));
+          const randomPostsData = randomPostsSnapshot.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter((p) => p.userId !== postData.userId && p.id !== postId);
+
+          // Shuffle and get a limited number of random posts
+          setRandomPosts(randomPostsData.sort(() => 0.5 - Math.random()).slice(0, 5));
         } else {
           console.log('Post does not exist');
         }
@@ -139,15 +163,45 @@ const PostDetails = () => {
         <div className="post-right">
           <img src={post.image} alt="Post" className="image-preview-large" />
           <img src={profileImage} alt="Profile" className="profile-picture-small" />
-          <p className="username-above">@{username}</p>
+          <p className="username-above">
+            <Link to={`/user/${post.userId}`}>@{username}</Link> {/* Link to user profile */}
+          </p>
         </div>
       </div>
-      
+
       {notification && (
         <div className="notification show">
           Image URL copied to clipboard!
         </div>
       )}
+
+      {/* Related Posts Section */}
+      <div className="related-posts-section">
+        <h3>More from @{username}</h3>
+        <div className="related-posts-grid">
+          {relatedPosts.length > 0 ? (
+            relatedPosts.map((relatedPost) => (
+              <Link to={`/post/${relatedPost.id}`} key={relatedPost.id} className="related-post-item">
+                <img src={relatedPost.image} alt={relatedPost.caption} className="related-post-image" />
+              </Link>
+            ))
+          ) : (
+            <p>No more posts from this user.</p>
+          )}
+        </div>
+      </div>
+
+      {/* Random Posts Section */}
+      <div className="random-posts-section">
+        <h3>Other posts you may like</h3>
+        <div className="random-posts-grid">
+          {randomPosts.map((randomPost) => (
+            <Link to={`/post/${randomPost.id}`} key={randomPost.id} className="random-post-item">
+              <img src={randomPost.image} alt={randomPost.caption} className="random-post-image" />
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

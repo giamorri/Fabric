@@ -1,3 +1,5 @@
+navbar.css
+
 body {
   margin: 0;
   padding: 0;
@@ -19,7 +21,7 @@ body {
   display: flex;
   justify-content: flex-start;
   position: fixed;
-  top: -7px;
+  top: 7px;
   left: 10px;
   z-index: 1001;
 }
@@ -35,14 +37,14 @@ img {
   height: 30px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .navbar {
-    position: fixed; /* Make the navbar stick to the bottom */
+    position:fixed; /* Make the navbar stick to the bottom */
     bottom: 0; /* Navbar will now be at the bottom */
     top: auto; /* Remove the top position */
     right: 0; 
-    width: 100%;
-    text-align: center;
+    width: 100vw; /* Full width */
+    flex-wrap: nowrap; /* Prevent items from wrapping */
     border-radius: 0; /* Remove border radius to fit the screen edge */
   }
 
@@ -50,7 +52,7 @@ img {
     display: flex;
     justify-content: flex-start;
     position: fixed;
-    top: -7px;
+    top: 7px;
     left: 10px;
     z-index: 1001;
   }
@@ -73,6 +75,8 @@ img {
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
 
 .navbar-list li {
@@ -144,3 +148,4 @@ img {
   background-color: #444; /* Same hover color as other buttons */
   border-radius: 5px;
 }
+
