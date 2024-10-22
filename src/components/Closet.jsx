@@ -8,10 +8,10 @@ const Closet = () => {
       <h1>My Closet</h1>
       <div className="closet-folders">
         <div className="folder">
-          <Link to="/SavedCloset">Saved Closet</Link>
+          <Link to="/SavedCloset">Saved Closet (coming soon)</Link>
         </div>
         <div className="folder">
-          <Link to="/HomeCloset">Home Closet</Link>
+          <Link to="/HomeCloset">Home Closet (coming soon)</Link>
         </div>
         <div className="folder">
           <Link to="/MannequinCloset">Mannequin Closet (coming soon)</Link>
