@@ -32,31 +32,27 @@ const Profile = () => {
     const fetchData = async (user) => {
       try {
         const userId = user.uid;
-        let displayName = user.displayName;
-         // Check if displayName is available; if not, fetch username from Firestore
-      if (!displayName) {
-        const userDocRef = doc(db, 'users', userId);
-        const userDoc = await getDoc(userDocRef);
-
-        if (userDoc.exists()) {
-          // Set displayName to the username from Firestore or fallback to UID
-          displayName = userDoc.data().username || userId;
-        } else {
-          displayName = userId; // Use UID if no other name is found
-        }
-      }
-        setUsername(displayName);
   
-        // Fetch User Data for Profile and Cover Image
+        // Fetch user document from Firestore
         const userDocRef = doc(db, 'users', userId);
         const userDoc = await getDoc(userDocRef);
+  
+        // Check if Firestore user document exists
         if (userDoc.exists()) {
           const userData = userDoc.data();
+  
+          // Set displayName, profileImage, and coverImage in state
+          setUsername(userData.username || user.displayName || userId);
           setProfileImage(userData.profileImage || 'path/to/default-profile.jpg');
           setCoverImage(userData.coverImage || 'path/to/default-cover.jpg');
+        } else {
+          // If no user document exists, set fallback values
+          setUsername(user.displayName || userId);
+          setProfileImage('path/to/default-profile.jpg');
+          setCoverImage('path/to/default-cover.jpg');
         }
   
-        // Fetch posts only created by this user
+        // Fetch posts created by this user
         const postsQuery = query(
           collection(db, 'posts'),
           where('userId', '==', userId)
@@ -64,30 +60,28 @@ const Profile = () => {
         onSnapshot(postsQuery, (snapshot) => {
           const loadedPosts = snapshot.docs.map((doc) => ({
             id: doc.id,
-            ...doc.data()
+            ...doc.data(),
           }));
           setPosts(loadedPosts);
-          console.log("Posts loaded:", loadedPosts);
         });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
   
+    // Listen for authentication state change
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         fetchData(user);
       } else {
-        console.log("User is not authenticated.");
-        // Optional: Redirect to login page
-        // navigate('/login');
+        console.log('User is not authenticated.');
       }
     });
   
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup subscription on component unmount
   }, []);
-
-
+  
+  
 
   // Function to handle toggling likes
   const toggleLike = () => {
@@ -151,35 +145,37 @@ const toggleCommentBox = () => {
   };
 
   // Function to handle image upload
-  const handleImageUpload = async (event, setImage, type) => {
-    const file = event.target.files[0];
-    if (!file) return;
+// Function to handle image upload (either profile or cover image)
+const handleImageUpload = async (event, setImage, type) => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const storageRef = ref(storage, `${type}/${username}-${file.name}`);
-    
-    try {
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      setImage(downloadURL); // Update state with new image URL
+  const storageRef = ref(storage, `${type}/${username}-${file.name}`);
+  
+  try {
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+    setImage(downloadURL); // Update state with new image URL
 
-      // Check if user document exists, create if not
-      const userDocRef = doc(db, 'users', username);
-      const userDoc = await getDoc(userDocRef);
+    // Check if user document exists, create if not
+    const userDocRef = doc(db, 'users', auth.currentUser.uid);
+    const userDoc = await getDoc(userDocRef);
 
-      if (!userDoc.exists()) {
-        await setDoc(userDocRef, {}); // Create an empty document if it doesn't exist
-      }
-
-      // Save the image URL in Firestore under the appropriate field (profileImage or coverImage)
-      await updateDoc(userDocRef, {
-        [type]: downloadURL,
-      });
-
-      console.log(`${type} image uploaded and saved to Firestore!`);
-    } catch (error) {
-      console.error(`Error uploading ${type} image:`, error);
+    if (!userDoc.exists()) {
+      await setDoc(userDocRef, {}); // Create an empty document if it doesn't exist
     }
+
+    // Save the image URL in Firestore under the appropriate field (profileImage or coverImage)
+    await updateDoc(userDocRef, {
+      [type]: downloadURL,
+    });
+
+    console.log(`${type} image uploaded and saved to Firestore!`);
+  } catch (error) {
+    console.error(`Error uploading ${type} image:`, error);
+  }
 };
+
 
 
 const triggerFileInput = (inputRef) => {
