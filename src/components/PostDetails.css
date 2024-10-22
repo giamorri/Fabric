@@ -1,0 +1,37 @@
+.related-posts-grid,
+.random-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Make sure the images are larger */
+  gap: 15px; /* Space between the images */
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.related-post-item img,
+.random-post-item img {
+  width: 100%; /* Ensure the images fill their grid container */
+  height: 300px; /* Set a height for the images */
+  object-fit: cover; /* Ensure the image fits within the bounds */
+  border-radius: 8px; /* Add a little rounding for aesthetic */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.related-post-item img:hover,
+.random-post-item img:hover {
+  transform: scale(1.05); /* Scale on hover for better interactivity */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .related-posts-grid,
+  .random-posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Reduce image size on small screens */
+  }
+
+  .related-post-item img,
+  .random-post-item img {
+    height: 200px; /* Smaller height on mobile */
+  }
+}

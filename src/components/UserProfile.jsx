@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Import Link to navigate to PostDetails
 import { db } from '../firebase';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import './UserProfile.css';
@@ -51,14 +51,13 @@ const UserProfile = () => {
       <h1 className="username">@{userData.username}</h1>
 
       <div className="user-posts-section">
-        <h2>Posts by @{userData.username}</h2>
         <div className="user-posts-grid">
           {posts.length > 0 ? (
             posts.map((post) => (
-              <div key={post.id} className="user-post-item">
+              <Link to={`/post/${post.id}`} key={post.id} className="user-post-item">
                 <img src={post.image} alt={post.caption} className="user-post-image" />
                 <p>{post.caption}</p>
-              </div>
+              </Link>
             ))
           ) : (
             <p>No posts yet.</p>
