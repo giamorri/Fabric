@@ -1,44 +1,50 @@
 .closet-container {
     text-align: center;
-    padding: 50px 20px;
-    background-color: #2a2c34; /* Dark background for the closet page */
+    padding: 70px 50px;
+    background-color: rgba(42, 44, 52, 0.9); /* Slight transparency for background */
     color: #f4f4f4; /* Light text color */
+    min-height: 100px; /* Ensure full-height container */
 }
 
 .closet-container h1 {
     font-size: 2.5rem;
-    color: #d1a354; /* A luxurious gold color for the title */
+    color: rgb(180, 134, 90);; /* A luxurious gold color for the title */
     margin-bottom: 40px;
 }
 
 .closet-folders {
     display: flex;
-    justify-content: space-around;
+    justify-content: center; /* Center folders horizontally */
     margin-top: 20px;
-    flex-wrap: wrap; /* Allow the folders to wrap on smaller screens */
+    gap: 20px; /* Add space between folders */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 .folder {
-    background-color: #3c3f51; /* Darker shade for the folders */
-    padding: 30px;
+    background-color: rgba(60, 63, 81, 0.3); /* Transparent dark shade for the folders */
+    padding: 20px;
     border-radius: 12px;
-    width: 250px;
+    width: 200px; /* Smaller width */
     text-align: center;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* A bit stronger shadow */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* A bit stronger shadow for depth */
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    backdrop-filter: blur(10px); /* Add blur for a modern, soft glass effect */
 }
 
 .folder:hover {
-    background-color: #d1a354; /* Gold on hover for a luxury feel */
-    transform: scale(1.05); /* Slightly enlarge the folder on hover */
+    background-color: rgba(209, 163, 84, 0.8); /* Gold with transparency on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
 .folder a {
     text-decoration: none;
     font-weight: bold;
-    color: #f4f4f4; /* Light text color */
+    color: rgb(191, 141, 93); /* Light text color */
     font-size: 1.2rem;
+    display: block;
+    line-height: 1.5rem;
 }
 
 .folder a:hover {

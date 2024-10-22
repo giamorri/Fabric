@@ -40,6 +40,11 @@ const MannequinCloset = () => {
 
   return (
     <div className="moodboard">
+       <div className="coming-soon-message">
+        <h2>Coming Soon!</h2>
+        <p>This feature is under development and will be available soon.</p>
+      </div>
+      
       <div className="mannequin-area">
         <div className="mannequin">
           <img

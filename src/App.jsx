@@ -14,26 +14,17 @@ import HomeCloset from './components/HomeCloset';
 import MannequinCloset from './components/MannequinCloset'; 
 import UserProfile from './components/UserProfile';
 
-const App = ({ onImageChange }) => {
-  const [backgroundImage, setBackgroundImage] = useState('image1.jpg');
-
-  const handleImageChange = (newImage) => {
-    setBackgroundImage(newImage);
-  };
-
-
+const App = () => {
 
   return (
 
-    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <Router>
         <Navbar />
         <div className="content">
           <Routes>
             <Route path="/Home" element={<Home />} />
             <Route path="/Profile" element={<Profile />} />
-            <Route path="/Settings" element={<Settings onImageChange={handleImageChange} />} />
-            
+            <Route path="/Settings" element={<Settings />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Signin" element={<Signin />} />
             <Route path="/post/:postId" element={<PostDetails />} />  
@@ -45,7 +36,7 @@ const App = ({ onImageChange }) => {
           </Routes>
         </div>
       </Router>
-    </div>
+    
   );
 };
 

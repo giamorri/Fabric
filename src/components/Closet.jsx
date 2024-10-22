@@ -14,7 +14,7 @@ const Closet = () => {
           <Link to="/HomeCloset">Home Closet</Link>
         </div>
         <div className="folder">
-          <Link to="/MannequinCloset">Mannequin Closet</Link>
+          <Link to="/MannequinCloset">Mannequin Closet (coming soon)</Link>
         </div>
       </div>
     </div>
