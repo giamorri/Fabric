@@ -35,7 +35,7 @@
 > `npm start`
 
  - once this is done, the project should be up and running in the default browser
- - you can create your own account but if you wish to use a default login, use the following account:
+#### you can create your own account but if you wish to use a default login, use the following account:
 
 **username:** john@gmail.com
 
