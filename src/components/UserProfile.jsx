@@ -56,7 +56,7 @@ const UserProfile = () => {
             posts.map((post) => (
               <Link to={`/post/${post.id}`} key={post.id} className="user-post-item">
                 <img src={post.image} alt={post.caption} className="user-post-image" />
-                <p>{post.caption}</p>
+                {/* <p>{post.caption}</p> */}
               </Link>
             ))
           ) : (

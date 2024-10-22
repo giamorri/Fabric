@@ -319,7 +319,7 @@ const handleDeletePost = async (postId) => {
       <div key={post.id || index} className="post-item" onClick={() => openPostViewModal(post)}>
     <img src={post.image} alt="User Post" className="post-image" />
     <div className="post-info">
-          <p>{post.caption}</p>
+          {/* <p>{post.caption}</p> */}
         </div>
       </div>
     ))
