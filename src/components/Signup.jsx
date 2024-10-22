@@ -46,7 +46,7 @@ const Signup = () => {
           </div>
         ) : (
           // Sign up form
-          <form onSubmit={handleSignup} data-testid="signup-sample">
+          <form onSubmit={handleSignup}>
             <input
               type="text"
               placeholder="Username"
