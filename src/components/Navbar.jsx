@@ -66,9 +66,6 @@ const Navbar = () =>
             </button>
           </li>
         )}
-
-
-
       </ul>
     </nav>
   );
